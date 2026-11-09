@@ -9,6 +9,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Geist Pixel";
+  src: url("/fonts/GeistPixelVF.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Dark UI + single warm cream accent (no blue / green) */
 @theme {
   --color-bg: #08090a;
@@ -35,6 +43,7 @@
   --font-sans: "Geist Serif", Georgia, "Times New Roman", serif;
   --font-display: "Geist Serif", Georgia, "Times New Roman", serif;
   --font-mono: "Geist Serif", Georgia, "Times New Roman", serif;
+  --font-pixel: "Geist Pixel", "Geist Serif", Georgia, serif;
   --shadow-panel:
     0 0 0 1px rgb(255 255 255 / 0.06),
   0 8px 24px rgb(0 0 0 / 0.45),
@@ -103,6 +112,22 @@
   .font-elsh-heart {
     font-variation-settings: "ELSH" 100;
   }
+
+  /* Geist Pixel shape axis (ELSH) — display / instrument type */
+  .font-pixel-square {
+    font-family: var(--font-pixel);
+    font-variation-settings: "ELSH" 1;
+  }
+
+  .font-pixel-grid {
+    font-family: var(--font-pixel);
+    font-variation-settings: "ELSH" 40;
+  }
+
+  .font-pixel-line {
+    font-family: var(--font-pixel);
+    font-variation-settings: "ELSH" 80;
+  }
 }
 
 @layer components {
@@ -163,10 +188,92 @@
     font-feature-settings: "kern" 1, "liga" 1;
   }
 
-  .section-kicker {
-    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-primary;
-    font-variation-settings: "ELSH" 50;
-    font-feature-settings: "kern" 1, "liga" 1;
+  .section-kicker,
+  .section-label {
+    font-family: var(--font-pixel);
+    @apply text-[11px] font-medium uppercase text-primary;
+    letter-spacing: 0.18em;
+    line-height: 1.35;
+    font-variation-settings: "ELSH" 40;
+    font-feature-settings: "kern" 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  .type-eyebrow {
+    font-family: var(--font-pixel);
+    @apply text-[10px] font-medium uppercase text-faint;
+    letter-spacing: 0.16em;
+    line-height: 1.35;
+    font-variation-settings: "ELSH" 40;
+    font-feature-settings: "kern" 1;
+  }
+
+  .badge-new {
+    font-family: var(--font-pixel);
+    @apply px-2 py-0.5 text-[10px] font-medium uppercase text-primary-foreground;
+    letter-spacing: 0.14em;
+    font-variation-settings: "ELSH" 40;
+    background: var(--color-primary);
+  }
+
+  .step-index {
+    font-family: var(--font-pixel);
+    @apply text-xs text-primary;
+    font-variation-settings: "ELSH" 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+    font-feature-settings: "kern" 1, "tnum" 1;
+  }
+
+  /* Serif + Pixel rhythm: inline terms inside body copy */
+  .text-instrument {
+    font-family: var(--font-pixel);
+    font-variation-settings: "ELSH" 1;
+    font-size: 0.9em;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+    font-feature-settings: "kern" 1;
+  }
+
+  /* Short meta lines under stats, industry tags, license hints */
+  .copy-caption {
+    font-family: var(--font-pixel);
+    font-variation-settings: "ELSH" 40;
+    @apply text-[11px] leading-snug text-muted;
+    letter-spacing: 0.07em;
+    text-wrap: pretty;
+    font-feature-settings: "kern" 1;
+  }
+
+  /* One-line bridge under section titles — pixel at readable scale */
+  .copy-bridge {
+    font-family: var(--font-pixel);
+    font-variation-settings: "ELSH" 40;
+    @apply text-sm leading-relaxed text-muted;
+    letter-spacing: 0.045em;
+    text-wrap: pretty;
+    font-feature-settings: "kern" 1;
+  }
+
+  /* Short instrument paragraphs (2–3 lines max) alongside serif body */
+  .p-instrument {
+    font-family: var(--font-pixel);
+    font-variation-settings: "ELSH" 40;
+    @apply text-[13px] leading-[1.7] text-muted;
+    letter-spacing: 0.04em;
+    text-wrap: pretty;
+    font-feature-settings: "kern" 1;
+    max-width: 40rem;
+  }
+
+  .chip-instrument {
+    font-family: var(--font-pixel);
+    font-variation-settings: "ELSH" 1;
+    @apply border px-3 py-1 text-[11px] text-muted;
+    border-color: var(--color-border);
+    background: var(--color-bg);
+    letter-spacing: 0.06em;
+    font-feature-settings: "kern" 1;
   }
 
   .text-link {
@@ -182,10 +289,12 @@
   }
 
   .stat-value {
-    @apply text-[1.35rem] font-semibold tracking-tight text-primary;
-    font-variation-settings: "ELSH" 25;
+    font-family: var(--font-pixel);
+    @apply text-[1.45rem] font-medium tracking-tight text-primary;
+    font-variation-settings: "ELSH" 1;
     font-variant-numeric: tabular-nums;
     font-feature-settings: "kern" 1, "tnum" 1;
+    letter-spacing: 0.02em;
   }
 
   .glass-card {
@@ -317,6 +426,60 @@
     box-shadow: 0 0 0 3px var(--color-primary-muted);
   }
 
+  #project-intake-root.is-submitting .form-intake-status,
+  #project-intake-root.is-complete .form-intake-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  #project-intake-root.is-submitting .form-intake-status {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: rgb(15 16 17 / 0.94);
+    backdrop-filter: blur(6px);
+  }
+
+  #project-intake-root.is-complete .form-intake-status {
+    position: static;
+    min-height: 12rem;
+  }
+
+  #project-intake-root.is-submitting #intake-form-body.invisible {
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .form-intake-status__panel {
+    width: 100%;
+    max-width: 28rem;
+    text-align: left;
+  }
+
+  .form-intake-status__spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid var(--color-border-strong);
+    border-top-color: var(--color-primary);
+    animation: form-intake-spin 0.75s linear infinite;
+  }
+
+  @keyframes form-intake-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .form-intake-status__spinner {
+      animation: none;
+      border-top-color: var(--color-border-strong);
+      opacity: 0.7;
+    }
+  }
+
   .chip-active {
     @apply border-primary/40 bg-primary-muted text-primary;
     font-variation-settings: "ELSH" 25;
@@ -399,9 +562,10 @@
     background: transparent;
     padding: 0.15rem 0;
     text-align: right;
+    font-family: var(--font-pixel);
     font-size: 8px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
+    font-weight: 500;
+    letter-spacing: 0.16em;
     line-height: 1.2;
     color: var(--color-faint);
     cursor: pointer;
@@ -409,7 +573,8 @@
     transition:
       color var(--ruler-duration) var(--ruler-ease),
       opacity var(--ruler-duration) var(--ruler-ease);
-    font-variation-settings: "ELSH" 25;
+    font-variation-settings: "ELSH" 40;
+    text-rendering: optimizeLegibility;
   }
 
   .ruler-nav:hover .ruler-nav__label,
@@ -557,11 +722,13 @@
     left: -1.1rem;
     top: -0.5rem;
     min-width: 1.25rem;
+    font-family: var(--font-pixel);
     font-size: 9px;
     font-variant-numeric: tabular-nums;
     text-align: right;
     color: var(--color-primary);
-    font-variation-settings: "ELSH" 25;
+    font-variation-settings: "ELSH" 1;
+    font-feature-settings: "kern" 1, "tnum" 1;
     opacity: 0;
     transition: opacity var(--ruler-duration) var(--ruler-ease);
   }
@@ -577,9 +744,12 @@
     right: 0.2rem;
     height: 100%;
     list-style: none;
+    font-family: var(--font-pixel);
     font-size: 8px;
     font-variant-numeric: tabular-nums;
     color: var(--color-faint);
+    font-variation-settings: "ELSH" 1;
+    font-feature-settings: "kern" 1, "tnum" 1;
     pointer-events: none;
     opacity: 0;
     transition: opacity var(--ruler-duration) var(--ruler-ease);

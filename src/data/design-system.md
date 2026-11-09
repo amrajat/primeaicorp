@@ -1,8 +1,10 @@
 # Prime AI design system
 
-## Typography — Geist Serif only
+## Typography — Geist Serif + Geist Pixel
 
-Self-hosted `GeistSerifVF.woff2`.
+Self-hosted `GeistSerifVF.woff2` (body, headings, UI) and `GeistPixelVF.woff2` (kickers, stats, ruler, step indices).
+
+Geist Pixel uses a separate **ELSH** axis: Square `1`, Grid `40`, Line `80` (see `.font-pixel-*` in `global.css`).
 
 ### Glyphs / stylistic sets — what they are (not icons)
 
@@ -19,8 +21,16 @@ Shape variants use the **ELSH** variation axis (not separate font files):
 | Class | ELSH | Use |
 |-------|------|-----|
 | `.font-elsh-regular` | 0 | Body, buttons, forms |
-| `.font-elsh-square` | 25 | Display headings, stats, logo wordmark |
-| `.font-elsh-triangle` | 50 | Section kickers, badges |
+| `.font-elsh-square` | 25 | Display headings, logo wordmark |
+| `.font-elsh-triangle` | 50 | Optional serif accent (rare) |
+| `.section-kicker` / `.section-label` | Pixel Grid (40) | Page section kickers |
+| `.stat-value` / `.step-index` | Pixel Square (1) | Hero stats, process `01`–`05` |
+| `.type-eyebrow` | Pixel Grid (40) | Footer column labels |
+| `.text-instrument` | Pixel Square (1) | Inline terms inside serif **p** / **lead** |
+| `.copy-bridge` | Pixel Grid (40) | One-line supporting **p** under headings |
+| `.p-instrument` | Pixel Grid (40) | Short 2–3 line **p** blocks (sidebars, cards) |
+| `.copy-caption` | Pixel Grid (40) | Stat labels, durations, license hints |
+| `.chip-instrument` | Pixel Square (1) | Technique / tag chips |
 | `.font-elsh-heart` | 100 | Hero emphasis word(s) — e.g. **weights** (heart-style **g**) |
 
 **How to confirm in the browser**

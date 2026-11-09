@@ -11,8 +11,11 @@ const families = Object.keys(modelFamilyLabels) as ModelFamily[];
   <section class="mx-auto max-w-6xl px-4 py-16 md:py-24">
     <p class="section-label">Models</p>
     <h1 class="heading-display mt-2 text-3xl md:text-4xl">Trainable model catalog</h1>
-    <p class="mt-4 max-w-2xl text-muted">
-      We fine-tune and adapt popular open stacks on your data. Final model choice depends on license, language, latency, and infra constraints.
+    <p class="lead mt-4 max-w-2xl">
+      We fine-tune and adapt popular <span class="text-instrument">open stacks</span> on your data. Final model choice depends on license, language, latency, and infra constraints.
+    </p>
+    <p class="p-instrument mt-3 text-[12px]">
+      License flags below are shorthand—always confirm with counsel before training on production data.
     </p>
 
     <div class="mt-8 flex flex-wrap gap-2" id="model-filters">

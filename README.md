@@ -21,11 +21,7 @@ npm run preview
    - **Build output directory:** `dist`
    - **Node.js version:** 22 (matches `package.json` engines)
 4. Add custom domain `primeaicorp.com` (and optional `www` redirect via `public/_redirects`).
-5. **Forms:** In the Pages project, enable **Forms**. Submissions use `data-static-form-name="project-intake"` on `/get-started`. Configure notifications to **ai@primeaicorp.com**. Set custom success URL to `/get-started?submitted=true` if offered in the dashboard.
-
-## Form without Cloudflare Forms
-
-Until Forms are enabled, inquiries still show the client-side form; wire [Formspree](https://formspree.io) or Email Routing by changing `action` on the form in `src/components/ProjectIntakeForm.astro`.
+5. **Forms:** In the Pages project, enable **Forms**. Submissions use `data-static-form-name="project-intake"` on `/get-started`. Send notifications to **ai@primeaicorp.com** and set the success URL to `/get-started?submitted=true`.
 
 ## Typography
 

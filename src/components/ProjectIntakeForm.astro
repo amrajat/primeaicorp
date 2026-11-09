@@ -12,122 +12,201 @@ const { compact = false, prefillUseCase = "" } = Astro.props;
 
 const urlParams = Astro.url.searchParams;
 const useCaseFromUrl = urlParams.get("use_case") ?? prefillUseCase;
+
+const otherFields = [
+  { select: "project_type", wrap: "project_type_other_wrap", input: "project_type_other", label: "Describe your project type" },
+  { select: "use_case", wrap: "use_case_other_wrap", input: "use_case_other", label: "Describe your use case" },
+  { select: "dataset", wrap: "dataset_other_wrap", input: "dataset_other", label: "Describe dataset status" },
+  { select: "timeline", wrap: "timeline_other_wrap", input: "timeline_other", label: "Describe your timeline" },
+  { select: "deployment", wrap: "deployment_other_wrap", input: "deployment_other", label: "Describe deployment target" },
+  { select: "budget", wrap: "budget_other_wrap", input: "budget_other", label: "Describe budget or constraints" },
+] as const;
 ---
 
-<form
-  name="project-intake"
-  method="POST"
-  action="/get-started"
-  data-static-form-name="project-intake"
-  class="glass-card space-y-5 p-6 md:p-8"
->
-  <input type="hidden" name="form-name" value="project-intake" />
+<div class="glass-card relative p-6 md:p-8" id="project-intake-root">
+  <div id="intake-form-body" class="space-y-5">
+    <form
+      id="project-intake-form"
+      name="project-intake"
+      method="POST"
+      action="/get-started"
+      data-static-form-name="project-intake"
+      class="space-y-5"
+    >
+      <input type="hidden" name="form-name" value="project-intake" />
 
-  {!compact && (
-    <div>
-      <h2 class="text-xl font-semibold">Tell us about your project</h2>
-    </div>
-  )}
+      {!compact && (
+        <div>
+          <h2 class="text-xl font-semibold">Tell us about your project</h2>
+        </div>
+      )}
 
-  <div class:list={["grid gap-4", compact ? "grid-cols-1" : "sm:grid-cols-2"]}>
-    <div>
-      <label for="name" class="mb-1 block text-xs font-medium text-muted">Name *</label>
-      <input id="name" name="name" type="text" required class="input-field" autocomplete="name" />
-    </div>
-    <div>
-      <label for="email" class="mb-1 block text-xs font-medium text-muted">Work email *</label>
-      <input id="email" name="email" type="email" required class="input-field" autocomplete="email" />
-    </div>
-    <div class:list={[compact ? "" : "sm:col-span-2"]}>
-      <label for="company" class="mb-1 block text-xs font-medium text-muted">Company *</label>
-      <input id="company" name="company" type="text" required class="input-field" autocomplete="organization" />
-    </div>
+      <div class:list={["grid gap-4", compact ? "grid-cols-1" : "sm:grid-cols-2"]}>
+        <div>
+          <label for="name" class="mb-1 block text-xs font-medium text-muted">Name *</label>
+          <input id="name" name="name" type="text" required class="input-field" autocomplete="name" />
+        </div>
+        <div>
+          <label for="email" class="mb-1 block text-xs font-medium text-muted">Work email *</label>
+          <input id="email" name="email" type="email" required class="input-field" autocomplete="email" />
+        </div>
+        <div class:list={[compact ? "" : "sm:col-span-2"]}>
+          <label for="company" class="mb-1 block text-xs font-medium text-muted">Company *</label>
+          <input id="company" name="company" type="text" required class="input-field" autocomplete="organization" />
+        </div>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label for="project_type" class="mb-1 block text-xs font-medium text-muted">Project type *</label>
+          <select id="project_type" name="project_type" required class="input-field">
+            {formOptions.projectTypes.map((t) => (
+              <option value={t}>{t}</option>
+            ))}
+          </select>
+          <div id="project_type_other_wrap" class="mt-2 hidden" hidden>
+            <label for="project_type_other" class="mb-1 block text-xs font-medium text-muted">Details *</label>
+            <input id="project_type_other" name="project_type_other" type="text" class="input-field" disabled />
+          </div>
+        </div>
+        <div>
+          <label for="budget" class="mb-1 block text-xs font-medium text-muted">Estimated budget (USD) *</label>
+          <select id="budget" name="budget" required class="input-field">
+            {formOptions.budget.map((b) => (
+              <option value={b}>{b}</option>
+            ))}
+          </select>
+          <div id="budget_other_wrap" class="mt-2 hidden" hidden>
+            <label for="budget_other" class="mb-1 block text-xs font-medium text-muted">Details *</label>
+            <input id="budget_other" name="budget_other" type="text" class="input-field" disabled />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="models_interest" class="mb-1 block text-xs font-medium text-muted">Models of interest</label>
+        <select id="models_interest" name="models_interest" multiple class="input-field min-h-[7rem]" size={compact ? 4 : 6}>
+          {models.map((m) => (
+            <option value={m.id}>{m.name}</option>
+          ))}
+          <option value="other">Other — not listed</option>
+        </select>
+        <p class="mt-1 text-xs text-muted">Hold Cmd/Ctrl to select multiple, or choose Other and describe in the message.</p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label for="use_case" class="mb-1 block text-xs font-medium text-muted">Use case *</label>
+          <select id="use_case" name="use_case" required class="input-field">
+            <option value="">Select…</option>
+            {useCases.map((u) => (
+              <option value={u.id} selected={u.id === useCaseFromUrl}>{u.title}</option>
+            ))}
+            <option value="Other">Other</option>
+          </select>
+          <div id="use_case_other_wrap" class="mt-2 hidden" hidden>
+            <label for="use_case_other" class="mb-1 block text-xs font-medium text-muted">Describe your use case *</label>
+            <input id="use_case_other" name="use_case_other" type="text" class="input-field" disabled />
+          </div>
+        </div>
+        <div>
+          <label for="dataset" class="mb-1 block text-xs font-medium text-muted">Dataset readiness *</label>
+          <select id="dataset" name="dataset" required class="input-field">
+            {formOptions.datasetReadiness.map((d) => (
+              <option value={d}>{d}</option>
+            ))}
+          </select>
+          <div id="dataset_other_wrap" class="mt-2 hidden" hidden>
+            <label for="dataset_other" class="mb-1 block text-xs font-medium text-muted">Details *</label>
+            <input id="dataset_other" name="dataset_other" type="text" class="input-field" disabled />
+          </div>
+        </div>
+        <div>
+          <label for="timeline" class="mb-1 block text-xs font-medium text-muted">Timeline *</label>
+          <select id="timeline" name="timeline" required class="input-field">
+            {formOptions.timeline.map((t) => (
+              <option value={t}>{t}</option>
+            ))}
+          </select>
+          <div id="timeline_other_wrap" class="mt-2 hidden" hidden>
+            <label for="timeline_other" class="mb-1 block text-xs font-medium text-muted">Details *</label>
+            <input id="timeline_other" name="timeline_other" type="text" class="input-field" disabled />
+          </div>
+        </div>
+        <div>
+          <label for="deployment" class="mb-1 block text-xs font-medium text-muted">Deployment target *</label>
+          <select id="deployment" name="deployment" required class="input-field">
+            {formOptions.deployment.map((d) => (
+              <option value={d}>{d}</option>
+            ))}
+          </select>
+          <div id="deployment_other_wrap" class="mt-2 hidden" hidden>
+            <label for="deployment_other" class="mb-1 block text-xs font-medium text-muted">Details *</label>
+            <input id="deployment_other" name="deployment_other" type="text" class="input-field" disabled />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="message" class="mb-1 block text-xs font-medium text-muted">Message</label>
+        <textarea
+          id="message"
+          name="message"
+          rows={compact ? 3 : 5}
+          class="input-field resize-y"
+          placeholder="Dataset size, compliance needs, target languages, models not listed…"
+        />
+      </div>
+
+      <div class="flex items-start gap-3">
+        <input id="consent" name="consent" type="checkbox" value="yes" required class="mt-1 h-4 w-4 rounded border-border accent-primary" />
+        <label for="consent" class="text-xs text-muted">
+          I agree to the <a href="/legal/privacy" class="text-accent hover:underline">Privacy Policy</a> and{" "}
+          <a href="/legal/terms" class="text-accent hover:underline">Terms of Service</a>.
+        </label>
+      </div>
+
+      <button type="submit" class="btn-primary w-full sm:w-auto">Submit project inquiry</button>
+    </form>
   </div>
 
-  <div class="grid gap-4 sm:grid-cols-2">
-    <div>
-      <label for="project_type" class="mb-1 block text-xs font-medium text-muted">Project type *</label>
-      <select id="project_type" name="project_type" required class="input-field">
-        {formOptions.projectTypes.map((t) => (
-          <option value={t}>{t}</option>
-        ))}
-      </select>
+  <div
+    id="intake-form-status"
+    class="form-intake-status hidden"
+    hidden
+    aria-live="polite"
+    aria-atomic="true"
+    aria-hidden="true"
+  >
+    <div data-intake-state="loading" class="form-intake-status__panel" hidden>
+      <p class="copy-caption text-primary">Sending</p>
+      <h3 class="heading-section mt-2 text-lg">Submitting your inquiry…</h3>
+      <p class="mt-2 text-sm text-muted">Please keep this tab open for a moment.</p>
+      <div class="form-intake-status__spinner mt-6" aria-hidden="true"></div>
     </div>
-    <div>
-      <label for="budget" class="mb-1 block text-xs font-medium text-muted">Estimated budget (USD) *</label>
-      <select id="budget" name="budget" required class="input-field">
-        {formOptions.budget.map((b) => (
-          <option value={b}>{b}</option>
-        ))}
-      </select>
-    </div>
-  </div>
 
-  <div>
-    <label for="models_interest" class="mb-1 block text-xs font-medium text-muted">Models of interest</label>
-    <select id="models_interest" name="models_interest" multiple class="input-field min-h-[7rem]" size={compact ? 4 : 6}>
-      {models.map((m) => (
-        <option value={m.id}>{m.name}</option>
-      ))}
-    </select>
-    <p class="mt-1 text-xs text-muted">Hold Cmd/Ctrl to select multiple, or describe in the message below.</p>
-  </div>
+    <div data-intake-state="success" class="form-intake-status__panel" hidden>
+      <p class="copy-caption text-primary">Received</p>
+      <h3 class="heading-section mt-2 text-lg">Thank you</h3>
+      <p class="mt-3 text-sm leading-relaxed text-muted">
+        We received your project details and will respond at your work email, typically within two business days.
+      </p>
+      <a href="/" class="btn-secondary mt-8 inline-flex">Back to home</a>
+    </div>
 
-  <div class="grid gap-4 sm:grid-cols-2">
-    <div>
-      <label for="use_case" class="mb-1 block text-xs font-medium text-muted">Use case *</label>
-      <select id="use_case" name="use_case" required class="input-field">
-        <option value="">Select…</option>
-        {useCases.map((u) => (
-          <option value={u.id} selected={u.id === useCaseFromUrl}>{u.title}</option>
-        ))}
-        <option value="other">Other</option>
-      </select>
-    </div>
-    <div>
-      <label for="dataset" class="mb-1 block text-xs font-medium text-muted">Dataset readiness *</label>
-      <select id="dataset" name="dataset" required class="input-field">
-        {formOptions.datasetReadiness.map((d) => (
-          <option value={d}>{d}</option>
-        ))}
-      </select>
-    </div>
-    <div>
-      <label for="timeline" class="mb-1 block text-xs font-medium text-muted">Timeline *</label>
-      <select id="timeline" name="timeline" required class="input-field">
-        {formOptions.timeline.map((t) => (
-          <option value={t}>{t}</option>
-        ))}
-      </select>
-    </div>
-    <div>
-      <label for="deployment" class="mb-1 block text-xs font-medium text-muted">Deployment target *</label>
-      <select id="deployment" name="deployment" required class="input-field">
-        {formOptions.deployment.map((d) => (
-          <option value={d}>{d}</option>
-        ))}
-      </select>
+    <div data-intake-state="error" class="form-intake-status__panel" hidden>
+      <p class="copy-caption text-primary">Could not send</p>
+      <h3 class="heading-section mt-2 text-lg">Something went wrong</h3>
+      <p class="mt-3 text-sm leading-relaxed text-muted">
+        Try again, or email us directly at{" "}
+        <a href={`mailto:${site.emails.sales}`} class="text-link">{site.emails.sales}</a>.
+      </p>
+      <button type="button" class="btn-primary mt-6" data-intake-retry>Try again</button>
     </div>
   </div>
+</div>
 
-  <div>
-    <label for="message" class="mb-1 block text-xs font-medium text-muted">Message</label>
-    <textarea id="message" name="message" rows={compact ? 3 : 5} class="input-field resize-y" placeholder="Dataset size, compliance needs, target languages…" />
-  </div>
-
-  <div class="flex items-start gap-3">
-    <input id="consent" name="consent" type="checkbox" value="yes" required class="mt-1 h-4 w-4 rounded border-border accent-primary" />
-    <label for="consent" class="text-xs text-muted">
-      I agree to the <a href="/legal/privacy" class="text-accent hover:underline">Privacy Policy</a> and{" "}
-      <a href="/legal/terms" class="text-accent hover:underline">Terms of Service</a>.
-    </label>
-  </div>
-
-  <button type="submit" class="btn-primary w-full sm:w-auto">Submit project inquiry</button>
-
-  <p class="text-xs text-muted">
-    Submissions are reviewed by our team at{" "}
-    <a href={`mailto:${site.emails.sales}`} class="text-accent hover:underline">{site.emails.sales}</a>.
-    Enable Cloudflare Pages Forms in your dashboard to receive entries by email.
-  </p>
-</form>
+<script>
+  import { initProjectIntakeForm } from "../scripts/project-intake-form";
+  initProjectIntakeForm();
+</script>

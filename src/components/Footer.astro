@@ -1,5 +1,5 @@
 ---
-import { site, navLinks, legalLinks, partners } from "../data/site";
+import { site, navLinks, legalLinks } from "../data/site";
 ---
 
 <footer class="border-t border-border bg-surface">
@@ -12,7 +12,7 @@ import { site, navLinks, legalLinks, partners } from "../data/site";
       </p>
     </div>
     <div>
-      <p class="text-xs font-medium uppercase tracking-wide text-faint">Company</p>
+      <p class="type-eyebrow">Company</p>
       <ul class="mt-3 space-y-2 text-sm">
         <li><a href="/about" class="text-muted hover:text-text">About</a></li>
         <li><a href="/contact" class="text-muted hover:text-text">Contact</a></li>
@@ -20,7 +20,7 @@ import { site, navLinks, legalLinks, partners } from "../data/site";
       </ul>
     </div>
     <div>
-      <p class="text-xs font-medium uppercase tracking-wide text-faint">Expertise</p>
+      <p class="type-eyebrow">Expertise</p>
       <ul class="mt-3 space-y-2 text-sm">
         {navLinks.slice(0, 3).map((l) => (
           <li>
@@ -30,7 +30,7 @@ import { site, navLinks, legalLinks, partners } from "../data/site";
       </ul>
     </div>
     <div>
-      <p class="text-xs font-medium uppercase tracking-wide text-faint">Legal</p>
+      <p class="type-eyebrow">Legal</p>
       <ul class="mt-3 space-y-2 text-sm">
         {legalLinks.map((l) => (
           <li>
@@ -38,15 +38,12 @@ import { site, navLinks, legalLinks, partners } from "../data/site";
           </li>
         ))}
       </ul>
-      <p class="mt-4 text-xs text-faint">
-        Legal: <a href={`mailto:${site.emails.legal}`} class="text-link">{site.emails.legal}</a>
-      </p>
     </div>
   </div>
   <div class="border-t border-border py-5">
-    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 text-xs text-faint md:flex-row lg:px-8">
-      <p>© {new Date().getFullYear()} {site.name}</p>
-      <p>{partners.map((p) => p.name).join(" · ")}</p>
-    </div>
+    <p class="mx-auto max-w-7xl px-4 text-xs leading-relaxed text-faint lg:px-8">
+      © {new Date().getFullYear()} {site.name}. DPA requests, privacy rights, and subprocessors - {" "}
+      <a href={`mailto:${site.emails.legal}`} class="text-faint hover:text-muted">{site.emails.legal}</a>
+    </p>
   </div>
 </footer>

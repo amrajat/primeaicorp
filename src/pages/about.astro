@@ -7,8 +7,12 @@ import { site } from "../data/site";
   <section class="mx-auto max-w-3xl px-4 py-16 md:py-24">
     <p class="section-label">About</p>
     <h1 class="heading-display mt-2 text-3xl md:text-4xl">{site.name}</h1>
-    <p class="mt-6 text-lg text-muted">
-      We are a training agency focused on open LLMs and diffusion models. Clients bring domain data; we bring dataset engineering, GPU training, evaluation, and deployment documentation.
+    <p class="copy-bridge mt-4">Training agency — open LLMs and diffusion on your data.</p>
+    <p class="mt-5 text-lg leading-relaxed text-muted">
+      Clients bring domain data; we bring dataset engineering, GPU training, evaluation, and deployment documentation.
+    </p>
+    <p class="p-instrument mt-4 text-[13px]">
+      No customer A data in customer B models. Weights and adapters belong to you under contract.
     </p>
 
     <h2 class="mt-12 text-xl font-semibold">Principles</h2>
@@ -27,8 +31,8 @@ import { site } from "../data/site";
       </li>
     </ul>
 
-    <p class="mt-12 text-sm text-muted">
-      New projects: <a href={`mailto:${site.emails.sales}`} class="text-accent hover:underline">{site.emails.sales}</a>
+    <p class="copy-caption mt-12">
+      New projects: <a href={`mailto:${site.emails.sales}`} class="text-instrument hover:opacity-90">{site.emails.sales}</a>
     </p>
   </section>
 </BaseLayout>

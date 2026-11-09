@@ -41,18 +41,21 @@ export const pillars = [
     title: "Dataset",
     description:
       "Ingestion, cleaning, captioning, PII handling, and train/val splits with quality reports your team can audit.",
+    instrumentLine: "Splits, captions, and PII baselines your team can sign off.",
     icon: "database",
   },
   {
     title: "Train",
     description:
       "SFT, LoRA, alignment, and diffusion training on NVIDIA GPUs via AWS and Modal—with reproducible configs.",
+    instrumentLine: "SFT · LoRA · alignment — logged configs, not a black box.",
     icon: "cpu",
   },
   {
     title: "Ship",
     description:
       "Weights, eval reports, and deployment guides for VPC, Modal endpoints, SageMaker, or private Hugging Face repos.",
+    instrumentLine: "Weights, eval PDFs, and runbooks for your stack.",
     icon: "rocket",
   },
 ] as const;
@@ -76,15 +79,16 @@ export const techniques = [
 ] as const;
 
 export const formOptions = {
-  projectTypes: ["LLM", "Diffusion", "Multimodal", "Embeddings", "Speech", "Not sure"] as const,
-  datasetReadiness: ["None", "Raw", "Partially curated", "Production-ready"] as const,
-  timeline: ["ASAP", "1–3 months", "3–6 months", "Exploring"] as const,
+  projectTypes: ["LLM", "Diffusion", "Multimodal", "Embeddings", "Speech", "Not sure", "Other"] as const,
+  datasetReadiness: ["None", "Raw", "Partially curated", "Production-ready", "Other"] as const,
+  timeline: ["ASAP", "1–3 months", "3–6 months", "Exploring", "Other"] as const,
   budget: [
     "$5,000 – $15,000",
     "$15,000 – $50,000",
     "$50,000 – $150,000",
     "$150,000+",
     "Prefer to discuss",
+    "Other",
   ] as const,
   deployment: [
     "Cloud API",
@@ -92,5 +96,6 @@ export const formOptions = {
     "On-prem",
     "Hugging Face private",
     "Undecided",
+    "Other",
   ] as const,
-};
+} as const;

@@ -9,7 +9,10 @@ import { techniques } from "../data/site";
     <p class="section-label">Services</p>
     <h1 class="heading-display mt-2 text-3xl md:text-4xl">End-to-end model training</h1>
     <p class="lead mt-4">
-      We specialize in open and open-weight stacks—not proprietary black-box APIs. Every engagement includes clear deliverables and eval before handoff.
+      We specialize in <span class="text-instrument">open-weight</span> stacks—not proprietary black-box APIs. Every engagement includes clear deliverables and <span class="text-instrument">eval gates</span> before handoff.
+    </p>
+    <p class="p-instrument mt-4">
+      Dataset engineering, training, and deployment documentation in one statement of work.
     </p>
   </section>
 
@@ -40,7 +43,7 @@ import { techniques } from "../data/site";
       <h2 class="text-xl font-semibold">Training techniques</h2>
       <div class="mt-6 flex flex-wrap gap-2">
         {techniques.map((t) => (
-          <span class="rounded-full border border-border bg-bg px-3 py-1 text-xs text-muted">{t}</span>
+          <span class="chip-instrument">{t}</span>
         ))}
       </div>
       <a href="/get-started" class="btn-primary mt-10 inline-flex">Start project</a>
