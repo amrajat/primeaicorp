@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import BrandLogo from "../components/BrandLogo.astro";
 import PartnerMarquee from "../components/PartnerMarquee.astro";
 import { processSteps, partners } from "../data/site";
 ---
@@ -38,8 +39,14 @@ import { processSteps, partners } from "../data/site";
       {
         partners.map((p) => (
           <li class="glass-card p-5">
-            <a href={p.href} target="_blank" rel="noopener noreferrer" class="font-semibold hover:text-accent">
-              {p.name}
+            <a
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-3 font-semibold text-text transition-colors hover:text-primary"
+            >
+              <BrandLogo brand={p.brand} size={28} class="text-primary/80" labeled />
+              <span>{p.name}</span>
             </a>
           </li>
         ))

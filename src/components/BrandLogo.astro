@@ -1,0 +1,44 @@
+---
+import { getBrandIcon } from "../lib/brands";
+
+interface Props {
+  brand: string;
+  size?: number;
+  class?: string;
+  /** When false, icon is decorative (parent supplies visible label). */
+  labeled?: boolean;
+}
+
+const { brand, size = 22, class: className, labeled = false } = Astro.props;
+const def = getBrandIcon(brand);
+---
+
+{
+  !def ? null : def.path ? (
+    <svg
+      role={labeled ? "img" : undefined}
+      aria-hidden={labeled ? undefined : true}
+      aria-label={labeled ? def.title : undefined}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      class:list={["inline-block shrink-0 text-current", className]}
+      fill="currentColor"
+    >
+      {labeled ? <title>{def.title}</title> : null}
+      <path d={def.path} />
+    </svg>
+  ) : def.src ? (
+    <img
+      src={def.src}
+      alt={labeled ? def.title : ""}
+      aria-hidden={labeled ? undefined : true}
+      width={size}
+      height={size}
+      class:list={["brand-mark-img inline-block shrink-0 object-contain", className]}
+      loading="lazy"
+      decoding="async"
+    />
+  ) : null
+}

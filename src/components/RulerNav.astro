@@ -1,0 +1,24 @@
+---
+/** Fixed ruler scroll indicator — sections via [data-ruler-section] on page. */
+---
+
+<aside id="ruler-nav" class="ruler-nav hidden" aria-label="Page sections">
+  <div class="ruler-nav__inner">
+    <div class="ruler-nav__labels"></div>
+    <div class="ruler-nav__scale" aria-hidden="true">
+      <div class="ruler-nav__trail"></div>
+      <div class="ruler-nav__ticks ruler-nav__ticks--sparse" aria-hidden="true"></div>
+      <div class="ruler-nav__ticks ruler-nav__ticks--dense" aria-hidden="true"></div>
+      <div class="ruler-nav__needle">
+        <span class="ruler-nav__readout">0</span>
+      </div>
+    </div>
+    <ol class="ruler-nav__numbers" aria-hidden="true">
+      <li>0</li>
+      <li>25</li>
+      <li>50</li>
+      <li>75</li>
+      <li>100</li>
+    </ol>
+  </div>
+</aside>

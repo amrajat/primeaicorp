@@ -1,6 +1,5 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 export function initMotion() {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduced) {
@@ -23,20 +22,6 @@ export function initMotion() {
       scrollTrigger: { trigger: root, start: "top 85%", once: true },
     });
   });
-
-  const pulse = document.querySelector("#train-pulse");
-  if (pulse) {
-    gsap.timeline({ repeat: -1, defaults: { ease: "power1.inOut" } })
-      .to(pulse, { attr: { cx: 340, cy: 356 }, duration: 1.4 })
-      .to(pulse, { attr: { cx: 540, cy: 316 }, duration: 1.4 })
-      .to(pulse, { attr: { cx: 680, cy: 276 }, duration: 1.4 })
-      .to(pulse, { attr: { cx: 200, cy: 396 }, duration: 0.8 });
-  }
-
-  const orbit = document.querySelector("#train-orbit");
-  if (orbit) {
-    gsap.to(orbit, { rotation: 360, duration: 60, repeat: -1, ease: "none", transformOrigin: "50% 50%" });
-  }
 
   const header = document.querySelector("header");
   if (header) {

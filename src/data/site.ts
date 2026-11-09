@@ -32,11 +32,11 @@ export const legalLinks = [
 ] as const;
 
 export const partners = [
-  { name: "NVIDIA", href: "https://www.nvidia.com" },
-  { name: "Amazon Web Services", href: "https://aws.amazon.com" },
-  { name: "Modal", href: "https://modal.com" },
-  { name: "Hugging Face", href: "https://huggingface.co" },
-  { name: "Cloudflare", href: "https://www.cloudflare.com" },
+  { name: "NVIDIA", href: "https://www.nvidia.com", brand: "nvidia" },
+  { name: "Amazon Web Services", href: "https://aws.amazon.com", brand: "aws" },
+  { name: "Modal", href: "https://modal.com", brand: "modal" },
+  { name: "Hugging Face", href: "https://huggingface.co", brand: "huggingface" },
+  { name: "Cloudflare", href: "https://www.cloudflare.com", brand: "cloudflare" },
 ] as const;
 
 export const pillars = [

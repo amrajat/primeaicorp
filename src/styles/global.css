@@ -39,10 +39,10 @@
     0 0 0 1px rgb(255 255 255 / 0.06),
   0 8px 24px rgb(0 0 0 / 0.45),
   0 2px 8px rgb(0 0 0 / 0.3);
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
 }
 
@@ -63,6 +63,21 @@
     font-weight: 400;
     font-variation-settings: "ELSH" 0;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+
+  body.has-ruler-nav main {
+    padding-right: 0;
+  }
+
+  @media (min-width: 1024px) {
+    body.has-ruler-nav main {
+      padding-right: 4.75rem;
+    }
+  }
+
+  /* ArtCraft-style: sharp rectangles everywhere */
+  :where(*, *::before, *::after) {
+    border-radius: 0 !important;
   }
 
   ::selection {
@@ -91,6 +106,12 @@
 }
 
 @layer components {
+  /* Raster-free marks loaded from /public/brands — tint to cream on dark UI */
+  .brand-mark-img {
+    filter: brightness(0) invert(0.92);
+    opacity: 0.88;
+  }
+
   .panel {
     border-radius: var(--radius-xl);
     border: 1px solid transparent;
@@ -167,8 +188,31 @@
     font-feature-settings: "kern" 1, "tnum" 1;
   }
 
+  .glass-card {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-2);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .glass-card-hover {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-2);
+    box-shadow: var(--shadow-panel);
+    transition:
+      border-color 200ms var(--ease-out),
+      transform 200ms var(--ease-out),
+      box-shadow 200ms var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .glass-card-hover:hover {
+      border-color: var(--color-border-strong);
+      transform: translateY(-1px);
+    }
+  }
+
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-[13px] font-semibold;
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-[13px] font-semibold;
     background: var(--color-primary);
     color: var(--color-primary-foreground);
     border: 1px solid transparent;
@@ -190,7 +234,7 @@
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2.5 text-sm font-medium text-text;
+    @apply inline-flex items-center justify-center gap-2 border px-4 py-2.5 text-sm font-medium text-text;
     border-color: var(--color-border-strong);
     background: var(--color-surface);
     font-variation-settings: "ELSH" 0;
@@ -213,7 +257,7 @@
   }
 
   .btn-outline-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2.5 text-[13px] font-semibold text-primary;
+    @apply inline-flex items-center justify-center gap-2 border px-4 py-2.5 text-[13px] font-semibold text-primary;
     border-color: rgb(229 224 214 / 0.35);
     background: var(--color-primary-subtle);
     font-variation-settings: "ELSH" 0;
@@ -236,7 +280,7 @@
   }
 
   .tab-pill {
-    @apply rounded-full px-3 py-1.5 text-xs font-medium text-muted;
+    @apply px-3 py-1.5 text-xs font-medium text-muted;
     font-variation-settings: "ELSH" 0;
     transition: color 150ms var(--ease-out), background-color 150ms var(--ease-out);
     transition-property: color, background-color;
@@ -249,7 +293,7 @@
   }
 
   .input-field {
-    @apply w-full rounded-md border bg-surface px-3 py-2.5 text-sm text-text;
+    @apply w-full border bg-surface px-3 py-2.5 text-sm text-text;
     border-color: var(--color-border-strong);
     font-variation-settings: "ELSH" 0;
     transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
@@ -290,4 +334,281 @@
     clip: rect(0, 0, 0, 0);
     border: 0;
   }
+
+  /* Ruler scroll navigation (desktop): below header → viewport bottom */
+  .ruler-nav {
+    --ruler-top: 3.5rem;
+    --ruler-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --ruler-duration: 520ms;
+    --ruler-width-idle: 3.25rem;
+    --ruler-width-active: 4.5rem;
+    --ruler-scale-idle: 1.375rem;
+    --ruler-scale-active: 1.875rem;
+    position: fixed;
+    top: var(--ruler-top);
+    right: 0.35rem;
+    bottom: 0;
+    z-index: 40;
+    width: var(--ruler-width-idle);
+    pointer-events: none;
+    transition: width var(--ruler-duration) var(--ruler-ease);
+  }
+
+  .ruler-nav:hover,
+  .ruler-nav.is-engaged {
+    width: var(--ruler-width-active);
+  }
+
+  .ruler-nav:not(.hidden) {
+    display: block;
+    pointer-events: auto;
+  }
+
+  .ruler-nav__inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+
+  .ruler-nav__labels {
+    position: absolute;
+    inset: 0;
+    right: calc(var(--ruler-scale-idle) + 0.35rem);
+    pointer-events: auto;
+    transition: right var(--ruler-duration) var(--ruler-ease);
+  }
+
+  .ruler-nav:hover .ruler-nav__labels,
+  .ruler-nav.is-engaged .ruler-nav__labels {
+    right: calc(var(--ruler-scale-active) + 0.35rem);
+  }
+
+  .ruler-nav__label {
+    position: absolute;
+    right: 0;
+    translate: 0 -50%;
+    max-width: 6.5rem;
+    border: 0;
+    background: transparent;
+    padding: 0.15rem 0;
+    text-align: right;
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    line-height: 1.2;
+    color: var(--color-faint);
+    cursor: pointer;
+    opacity: 0.32;
+    transition:
+      color var(--ruler-duration) var(--ruler-ease),
+      opacity var(--ruler-duration) var(--ruler-ease);
+    font-variation-settings: "ELSH" 25;
+  }
+
+  .ruler-nav:hover .ruler-nav__label,
+  .ruler-nav.is-engaged .ruler-nav__label {
+    opacity: 0.72;
+  }
+
+  .ruler-nav__label:hover {
+    color: var(--color-muted);
+  }
+
+  .ruler-nav__label.is-active {
+    color: var(--color-primary);
+    opacity: 1;
+  }
+
+  .ruler-nav__scale {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--ruler-scale-idle);
+    height: 100%;
+    border-left: 1px solid var(--color-border-strong);
+    background: rgb(8 9 10 / 0.28);
+    backdrop-filter: blur(4px);
+    transition:
+      width var(--ruler-duration) var(--ruler-ease),
+      background var(--ruler-duration) var(--ruler-ease),
+      backdrop-filter var(--ruler-duration) var(--ruler-ease);
+  }
+
+  .ruler-nav:hover .ruler-nav__scale,
+  .ruler-nav.is-engaged .ruler-nav__scale {
+    width: var(--ruler-scale-active);
+    background: rgb(8 9 10 / 0.58);
+    backdrop-filter: blur(8px);
+  }
+
+  .ruler-nav__trail {
+    position: absolute;
+    top: 0;
+    left: -1px;
+    width: 3px;
+    height: 0;
+    background: linear-gradient(
+      to bottom,
+      rgb(229 224 214 / 0.05),
+      rgb(229 224 214 / 0.45)
+    );
+    box-shadow: 0 0 18px rgb(229 224 214 / 0.35);
+  }
+
+  .ruler-nav__ticks {
+    position: absolute;
+    inset: 0;
+    transition: opacity var(--ruler-duration) var(--ruler-ease);
+    pointer-events: none;
+  }
+
+  /* Idle: few major ticks */
+  .ruler-nav__ticks--sparse {
+    opacity: 1;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 0.32) 0,
+      rgb(255 255 255 / 0.32) 1px,
+      transparent 1px,
+      transparent 48px
+    );
+  }
+
+  /* Hover: fine + mid + major ticks */
+  .ruler-nav__ticks--dense {
+    opacity: 0;
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        rgb(255 255 255 / 0.14) 0,
+        rgb(255 255 255 / 0.14) 1px,
+        transparent 1px,
+        transparent 5px
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        rgb(255 255 255 / 0.26) 0,
+        rgb(255 255 255 / 0.26) 1px,
+        transparent 1px,
+        transparent 10px
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        rgb(255 255 255 / 0.55) 0,
+        rgb(255 255 255 / 0.55) 2px,
+        transparent 2px,
+        transparent 50px
+      );
+  }
+
+  .ruler-nav:hover .ruler-nav__ticks--sparse,
+  .ruler-nav.is-engaged .ruler-nav__ticks--sparse {
+    opacity: 0.15;
+  }
+
+  .ruler-nav:hover .ruler-nav__ticks--dense,
+  .ruler-nav.is-engaged .ruler-nav__ticks--dense {
+    opacity: 0.92;
+  }
+
+  .ruler-nav__needle {
+    position: absolute;
+    top: 0%;
+    left: -2.65rem;
+    width: 2.35rem;
+    height: 1px;
+    translate: 0 -50%;
+    background: var(--color-text);
+    box-shadow: 0 0 8px rgb(238 239 241 / 0.35);
+    pointer-events: none;
+    transition:
+      width var(--ruler-duration) var(--ruler-ease),
+      left var(--ruler-duration) var(--ruler-ease),
+      box-shadow var(--ruler-duration) var(--ruler-ease);
+  }
+
+  .ruler-nav:hover .ruler-nav__needle,
+  .ruler-nav.is-engaged .ruler-nav__needle {
+    left: -3.1rem;
+    width: 2.85rem;
+    box-shadow: 0 0 12px rgb(238 239 241 / 0.45);
+  }
+
+  .ruler-nav__needle::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: -3px;
+    width: 6px;
+    height: 6px;
+    background: var(--color-primary);
+    box-shadow: 0 0 8px rgb(229 224 214 / 0.5);
+  }
+
+  .ruler-nav__readout {
+    position: absolute;
+    left: -1.1rem;
+    top: -0.5rem;
+    min-width: 1.25rem;
+    font-size: 9px;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    color: var(--color-primary);
+    font-variation-settings: "ELSH" 25;
+    opacity: 0;
+    transition: opacity var(--ruler-duration) var(--ruler-ease);
+  }
+
+  .ruler-nav:hover .ruler-nav__readout,
+  .ruler-nav.is-engaged .ruler-nav__readout {
+    opacity: 1;
+  }
+
+  .ruler-nav__numbers {
+    position: absolute;
+    top: 0;
+    right: 0.2rem;
+    height: 100%;
+    list-style: none;
+    font-size: 8px;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-faint);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--ruler-duration) var(--ruler-ease);
+  }
+
+  .ruler-nav:hover .ruler-nav__numbers,
+  .ruler-nav.is-engaged .ruler-nav__numbers {
+    opacity: 1;
+  }
+
+  .ruler-nav__numbers li {
+    position: absolute;
+    right: 0;
+    translate: 0 -50%;
+  }
+
+  .ruler-nav__numbers li:nth-child(1) {
+    top: 0%;
+  }
+  .ruler-nav__numbers li:nth-child(2) {
+    top: 25%;
+  }
+  .ruler-nav__numbers li:nth-child(3) {
+    top: 50%;
+  }
+  .ruler-nav__numbers li:nth-child(4) {
+    top: 75%;
+  }
+  .ruler-nav__numbers li:nth-child(5) {
+    top: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ruler-nav__trail {
+      transition: height 0.01s linear;
+    }
+  }
+
 }
