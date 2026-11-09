@@ -5,20 +5,17 @@ export const site = {
   description:
     "Prime AI Company fine-tunes open LLMs and diffusion models—Stable Diffusion, FLUX, Llama, Qwen, and more—on your datasets. Enterprise training on AWS, NVIDIA, and Modal.",
   url: "https://primeaicorp.com",
-  lastLegalUpdate: "November 9, 2025",
+  lastLegalUpdate: "November 9, 2026",
   emails: {
     sales: "ai@primeaicorp.com",
     legal: "legal@primeaicorp.com",
   },
-  budgetNote:
-    "Projects typically start from $5,000 depending on scope, data volume, and model family.",
 } as const;
 
 export const navLinks = [
   { href: "/services", label: "Services" },
   { href: "/models", label: "Models" },
   { href: "/use-cases", label: "Use cases" },
-  { href: "/process", label: "Process" },
   { href: "/about", label: "About" },
 ] as const;
 

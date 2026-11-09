@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroSplit from "../components/HeroSplit.astro";
 import PartnerMarquee from "../components/PartnerMarquee.astro";
 import ModelTabs from "../components/ModelTabs.astro";
-import { site, pillars, processSteps } from "../data/site";
+import { pillars, processSteps } from "../data/site";
 import { getHomeUseCases } from "../data/useCases";
 ---
 
@@ -67,23 +67,12 @@ import { getHomeUseCases } from "../data/useCases";
         ))
       }
     </ol>
-    <a href="/process" class="btn-secondary mt-8 inline-flex">Full process</a>
   </section>
 
   <section class="mx-auto max-w-7xl px-4 pb-24 lg:px-8" data-ruler-section="Get started">
-    <div class="panel flex flex-col gap-8 p-8 md:flex-row md:items-center md:justify-between md:p-12">
-      <div>
-        <h2 class="heading-display text-2xl md:text-[2.25rem]">Ready to train on your data?</h2>
-        <p class="mt-3 max-w-md text-sm text-muted">{site.budgetNote}</p>
-      </div>
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <ul class="space-y-1 text-sm text-muted">
-          <li>NDA before data review</li>
-          <li>You own weights per SOW</li>
-          <li>VPC training available</li>
-        </ul>
-        <a href="/get-started" class="btn-primary shrink-0">Open project form</a>
-      </div>
+    <div class="panel flex flex-col items-start justify-between gap-6 p-8 md:flex-row md:items-center md:p-12">
+      <h2 class="heading-display text-2xl md:text-[2.25rem]">Ready to train on your data?</h2>
+      <a href="/get-started" class="btn-primary shrink-0">Start Project</a>
     </div>
   </section>
 </BaseLayout>

@@ -6,7 +6,7 @@ import { site } from "../data/site";
 const submitted = Astro.url.searchParams.has("submitted");
 ---
 
-<BaseLayout title="Start project" description="Project intake for custom LLM and diffusion model training. Projects typically start from $5,000.">
+<BaseLayout title="Start project" description="Project intake for custom LLM and diffusion model training.">
   <section class="mx-auto max-w-6xl px-4 py-16 md:py-24">
     <div class="grid gap-12 lg:grid-cols-5">
       <div class="lg:col-span-3">
@@ -21,7 +21,6 @@ const submitted = Astro.url.searchParams.has("submitted");
             <>
               <p class="section-label">Get started</p>
               <h1 class="heading-display mt-2 text-3xl md:text-4xl">Start your training project</h1>
-              <p class="lead mt-3">{site.budgetNote}</p>
               <div class="mt-8">
                 <ProjectIntakeForm />
               </div>
