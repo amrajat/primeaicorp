@@ -1,15 +1,14 @@
 ---
 import { site, navLinks } from "../data/site";
-import LogoMark from "./LogoMark.astro";
 
 const path = Astro.url.pathname;
 ---
 
 <header class="sticky top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-md transition-[box-shadow,border-color] duration-200 [&.is-scrolled]:border-border-strong [&.is-scrolled]:shadow-[0_4px_24px_rgb(0_0_0/0.35)]">
   <div class="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 lg:px-8">
-    <a href="/" class="flex items-center gap-2.5 text-sm font-medium text-text">
-      <LogoMark />
-      <span class="hidden font-elsh-square sm:inline">{site.shortName}</span>
+    <a href="/" class="site-wordmark">
+      <span class="sm:hidden">{site.headerShortName}</span>
+      <span class="hidden sm:inline">{site.name}</span>
     </a>
 
     <nav class="hidden items-center gap-1 md:flex" aria-label="Main">

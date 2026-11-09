@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { useCases, industries } from "../data/useCases";
+import { useCases, industries, useCaseCategoryLabels } from "../data/useCases";
 ---
 
-<BaseLayout title="Use cases" description="Enterprise RAG, diffusion brand LoRA, VPC training, and more applications for custom AI models.">
+<BaseLayout title="Use cases" description="Enterprise assistants, brand imagery, document review, and private-cloud training with fine-tuned open models.">
   <section class="mx-auto max-w-6xl px-4 py-16 md:py-24">
     <p class="section-label">Use cases</p>
-    <h1 class="heading-display mt-2 text-3xl md:text-4xl">Where trained models create value</h1>
-    <p class="mt-4 max-w-2xl text-muted">Filter by industry, then start a project brief pre-filled for your scenario.</p>
+    <h1 class="heading-display mt-2 text-3xl md:text-4xl">Where fine-tuned models fit</h1>
+    <p class="mt-4 max-w-2xl text-muted">Browse by industry, then open a project brief pre-filled for your scenario.</p>
 
     <div class="mt-8 flex flex-wrap gap-2" id="industry-filters">
       <button type="button" data-industry="all" class="ind-btn chip-active rounded-full border px-4 py-2 text-sm font-medium">All</button>
@@ -26,7 +26,7 @@ import { useCases, industries } from "../data/useCases";
           <article data-industry={u.industry} class="usecase-card glass-card-hover flex flex-col p-6">
             <div class="flex flex-wrap gap-2">
               <span class="rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">{u.industry}</span>
-              <span class="rounded-full border border-border px-2 py-0.5 text-xs text-muted">{u.category}</span>
+              <span class="rounded-full border border-border px-2 py-0.5 text-xs text-muted">{useCaseCategoryLabels[u.category]}</span>
             </div>
             <h2 class="mt-4 text-xl font-semibold">{u.title}</h2>
             <p class="mt-1 text-sm font-medium text-text/90">{u.heroLine}</p>

@@ -1,9 +1,11 @@
 export const site = {
   name: "Prime AI Company",
   shortName: "Prime AI",
+  /** Header wordmark below `sm` breakpoint */
+  headerShortName: "Prime AI Co.",
   tagline: "Train open models on your data.",
   description:
-    "Prime AI Company fine-tunes open LLMs and diffusion models—Stable Diffusion, FLUX, Llama, Qwen, and more—on your datasets. Enterprise training on AWS, NVIDIA, and Modal.",
+    "Prime AI Company fine-tunes open-weight language and image models, including Llama, Qwen, Stable Diffusion, and FLUX, on your data. Training runs on NVIDIA GPUs through AWS and Modal, or inside your own cloud account.",
   url: "https://primeaicorp.com",
   lastLegalUpdate: "November 9, 2026",
   emails: {
@@ -40,42 +42,44 @@ export const pillars = [
   {
     title: "Dataset",
     description:
-      "Ingestion, cleaning, captioning, PII handling, and train/val splits with quality reports your team can audit.",
-    instrumentLine: "Splits, captions, and PII baselines your team can sign off.",
+      "Ingestion, cleaning, captioning, PII handling, and train, validation, and test splits, with quality reports your team can review.",
+    instrumentLine: "Dataset cards document sources, filters, and splits.",
     icon: "database",
   },
   {
     title: "Train",
     description:
-      "SFT, LoRA, alignment, and diffusion training on NVIDIA GPUs via AWS and Modal—with reproducible configs.",
-    instrumentLine: "SFT · LoRA · alignment — logged configs, not a black box.",
+      "Supervised fine-tuning, LoRA, preference tuning, and diffusion training on NVIDIA GPUs through AWS and Modal, with versioned configs.",
+    instrumentLine: "Every run can be reproduced from its recorded config.",
     icon: "cpu",
   },
   {
     title: "Ship",
     description:
-      "Weights, eval reports, and deployment guides for VPC, Modal endpoints, SageMaker, or private Hugging Face repos.",
-    instrumentLine: "Weights, eval PDFs, and runbooks for your stack.",
+      "Weights, evaluation reports, and deployment guides for your VPC, Modal endpoints, SageMaker, or private Hugging Face repositories.",
+    instrumentLine: "Delivered with runbooks for your MLOps team.",
     icon: "rocket",
   },
 ] as const;
 
 export const processSteps = [
-  { title: "Discover", duration: "1–2 weeks", detail: "Scope, success metrics, license review, data assessment." },
-  { title: "Dataset", duration: "2–6 weeks", detail: "Curation, labeling, captioning, and security baselines." },
-  { title: "Train", duration: "1–4 weeks", detail: "Fine-tune or LoRA cycles with checkpoint tracking." },
-  { title: "Evaluate", duration: "1–2 weeks", detail: "Benchmarks, red-team passes, human review where needed." },
-  { title: "Handoff", duration: "1 week", detail: "Artifacts, docs, and optional inference setup." },
+  { title: "Discover", duration: "1–2 weeks", detail: "Scope, success metrics, license review, and data assessment." },
+  { title: "Dataset", duration: "2–6 weeks", detail: "Cleaning, captioning, annotation, privacy review, and data splits." },
+  { title: "Train", duration: "1–4 weeks", detail: "Fine-tuning runs with tracked configs, checkpoints, and interim evaluations." },
+  { title: "Evaluate", duration: "1–2 weeks", detail: "Benchmarks, red-team testing, and human review where needed." },
+  { title: "Handoff", duration: "1 week", detail: "Weights, documentation, and optional inference setup." },
 ] as const;
 
 export const techniques = [
-  "Full fine-tune (enterprise)",
-  "LoRA / LyCORIS / DoRA",
+  "Supervised fine-tuning (SFT)",
+  "Full fine-tuning",
+  "LoRA and DoRA",
   "QLoRA",
-  "DreamBooth-style identity",
-  "DPO / preference tuning",
+  "LyCORIS (diffusion)",
+  "DPO preference tuning",
+  "DreamBooth (with consent)",
   "Knowledge distillation",
-  "Multi-adapter stacking",
+  "Adapter merging and stacking",
 ] as const;
 
 export const formOptions = {

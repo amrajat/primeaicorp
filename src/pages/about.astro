@@ -3,31 +3,31 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../data/site";
 ---
 
-<BaseLayout title="About" description="Prime AI Company — open-model training on customer datasets.">
+<BaseLayout title="About" description="Prime AI Company fine-tunes open-weight language and image models on customer datasets.">
   <section class="mx-auto max-w-3xl px-4 py-16 md:py-24">
     <p class="section-label">About</p>
     <h1 class="heading-display mt-2 text-3xl md:text-4xl">{site.name}</h1>
-    <p class="copy-bridge mt-4">Training agency — open LLMs and diffusion on your data.</p>
+    <p class="copy-bridge mt-4">Fine-tuning open language and image models on your data.</p>
     <p class="mt-5 text-lg leading-relaxed text-muted">
-      Clients bring domain data; we bring dataset engineering, GPU training, evaluation, and deployment documentation.
+      You bring the domain data. We provide dataset engineering, GPU training, evaluation, and deployment documentation.
     </p>
     <p class="p-instrument mt-4 text-[13px]">
-      No customer A data in customer B models. Weights and adapters belong to you under contract.
+      Each customer's data is used only for that customer's models.
     </p>
 
     <h2 class="mt-12 text-xl font-semibold">Principles</h2>
     <ul class="mt-4 space-y-4 text-muted">
       <li>
-        <strong class="text-text">Your weights, your contract.</strong> Fine-tuned artifacts are delivered to you per statement of work. We do not train customer A’s data into customer B’s models.
+        <strong class="text-text">Delivered to you.</strong> Fine-tuned weights and adapters are delivered under your statement of work, subject to the license of the base model. We never train one customer's data into another customer's models.
       </li>
       <li>
-        <strong class="text-text">Open stacks.</strong> We prefer inspectable, self-hostable models over perpetual API rent when requirements allow.
+        <strong class="text-text">Open models.</strong> Where requirements allow, we choose models you can inspect and host yourself over recurring API fees.
       </li>
       <li>
-        <strong class="text-text">Safety by default.</strong> License review, consent for likeness training, and eval gates are part of standard delivery—not add-on surprises.
+        <strong class="text-text">Safety built in.</strong> License review, consent for any likeness training, and evaluation gates are part of standard delivery, not optional extras.
       </li>
       <li>
-        <strong class="text-text">Infrastructure you trust.</strong> Training runs on enterprise clouds with VPC options for regulated workloads.
+        <strong class="text-text">Your infrastructure.</strong> Training runs on enterprise cloud infrastructure, and can run inside your own AWS account or VPC for regulated workloads.
       </li>
     </ul>
 

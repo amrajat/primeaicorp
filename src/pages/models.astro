@@ -7,15 +7,15 @@ import { models, modelFamilyLabels, type ModelFamily } from "../data/models";
 const families = Object.keys(modelFamilyLabels) as ModelFamily[];
 ---
 
-<BaseLayout title="Models" description="Open LLM, diffusion, multimodal, embedding, and speech models we fine-tune on customer data.">
+<BaseLayout title="Models" description="Open-weight language, vision-language, image, video, embedding, and speech models we fine-tune on customer data.">
   <section class="mx-auto max-w-6xl px-4 py-16 md:py-24">
     <p class="section-label">Models</p>
-    <h1 class="heading-display mt-2 text-3xl md:text-4xl">Trainable model catalog</h1>
+    <h1 class="heading-display mt-2 text-3xl md:text-4xl">Models we fine-tune</h1>
     <p class="lead mt-4 max-w-2xl">
-      We fine-tune and adapt popular <span class="text-instrument">open stacks</span> on your data. Final model choice depends on license, language, latency, and infra constraints.
+      We fine-tune <span class="text-instrument">open-weight</span> models on your data. The right base model depends on license terms, language coverage, latency targets, and where you plan to deploy.
     </p>
     <p class="p-instrument mt-3 text-[12px]">
-      License flags below are shorthand—always confirm with counsel before training on production data.
+      License summaries are for orientation only and can change between releases. Confirm terms with your counsel before training on production data.
     </p>
 
     <div class="mt-8 flex flex-wrap gap-2" id="model-filters">

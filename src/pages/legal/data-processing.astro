@@ -1,6 +1,6 @@
 ---
 import LegalLayout from "../../layouts/LegalLayout.astro";
-import { site, partners } from "../../data/site";
+import { site } from "../../data/site";
 ---
 
 <LegalLayout title="Data Processing Addendum (Summary)">
@@ -16,13 +16,16 @@ import { site, partners } from "../../data/site";
   </p>
 
   <h2 id="subprocessors">Subprocessors</h2>
-  <p>We may use vetted subprocessors for compute and storage, including:</p>
+  <p>We may use the following subprocessors to deliver services, depending on the engagement:</p>
   <ul>
-    {partners.slice(0, 4).map((p) => (
-      <li>{p.name}</li>
-    ))}
+    <li><strong>Amazon Web Services:</strong> GPU compute and storage for training.</li>
+    <li><strong>Modal:</strong> serverless GPU compute for training and inference.</li>
+    <li><strong>Hugging Face:</strong> private model and dataset repositories, only when requested by the customer.</li>
   </ul>
-  <p>We will notify customers of material subprocessor changes where contractually required.</p>
+  <p>
+    Where a customer requires training inside its own AWS account or Modal workspace, that account is operated under the customer's own
+    agreement with the provider. We will notify customers of material subprocessor changes where contractually required.
+  </p>
 
   <h2 id="security">Security measures</h2>
   <ul>

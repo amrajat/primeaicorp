@@ -25,7 +25,7 @@ npm run preview
 
 ## Typography
 
-Single typeface: **[Geist Serif](https://vercel.com/font?type=serif)** — self-hosted from the `geist` npm package (`public/fonts/GeistSerifVF.woff2`). Re-copy after `npm update geist` if needed.
+**[Geist Serif](https://vercel.com/font?type=serif)** for body and headings, with **[Geist Pixel](https://vercel.com/font?type=pixel)** for labels, stats, and short supporting lines. Both are self-hosted from the `geist` npm package (`public/fonts/GeistSerifVF.woff2`, `public/fonts/GeistPixelVF.woff2`). Re-copy after `npm update geist` if needed.
 
 ## Content
 

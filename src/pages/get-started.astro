@@ -14,7 +14,7 @@ const submitted = Astro.url.searchParams.has("submitted");
           submitted ? (
             <div class="glass-card p-8">
               <h1 class="text-2xl font-bold">Thank you</h1>
-              <p class="mt-3 text-muted">We received your inquiry and will respond at your work email, typically within 2 business days.</p>
+              <p class="mt-3 text-muted">We received your inquiry and will reply to your work email, usually within two business days.</p>
               <a href="/" class="btn-secondary mt-6 inline-flex">Back to home</a>
             </div>
           ) : (
@@ -22,10 +22,10 @@ const submitted = Astro.url.searchParams.has("submitted");
               <p class="section-label">Get started</p>
               <h1 class="heading-display mt-2 text-3xl md:text-4xl">Start your training project</h1>
               <p class="lead mt-3">
-                Share scope, models, and data readiness—we respond at your work email, usually within two business days.
+                Tell us about your goals, preferred models, and data. We reply to your work email, usually within two business days.
               </p>
               <p class="p-instrument mt-2 text-[12px]">
-                Fields marked with <span class="text-instrument">*</span> are required for a first-pass fit review.
+                Fields marked <span class="text-instrument">*</span> are required for our initial fit review.
               </p>
               <div class="mt-8">
                 <ProjectIntakeForm />
@@ -37,18 +37,18 @@ const submitted = Astro.url.searchParams.has("submitted");
       <aside class="lg:col-span-2">
         <div class="glass-card sticky top-24 space-y-6 p-6">
           <h2 class="font-semibold">What happens next</h2>
-          <p class="copy-bridge text-[12px]">From submit to statement of work—typical path for new teams.</p>
+          <p class="copy-bridge text-[12px]">The typical path from inquiry to statement of work.</p>
           <ol class="space-y-3 text-sm text-muted">
-            <li>1. We review fit, licenses, and data sensitivity.</li>
-            <li>2. Optional NDA before dataset access.</li>
-            <li>3. Scoping call with rough GPU and timeline estimate.</li>
-            <li>4. Statement of work and milestone schedule.</li>
+            <li>1. We review fit, model licenses, and data sensitivity.</li>
+            <li>2. Optional NDA before any dataset access.</li>
+            <li>3. Scoping call covering approach, compute, and timeline.</li>
+            <li>4. Statement of work with a milestone schedule.</li>
           </ol>
           <h2 class="font-semibold">FAQ</h2>
           <dl class="space-y-3 text-sm">
             <div>
               <dt class="font-medium text-text">Who owns the model?</dt>
-              <dd class="text-muted">Delivered weights and adapters are yours per SOW unless otherwise agreed.</dd>
+              <dd class="text-muted">Fine-tuned weights and adapters are delivered to you under the statement of work, subject to the base model's license.</dd>
             </div>
             <div>
               <dt class="font-medium text-text">Data handling</dt>

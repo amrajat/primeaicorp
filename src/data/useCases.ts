@@ -1,4 +1,20 @@
-export type Industry = "Retail" | "Finance" | "Healthcare" | "Media" | "SaaS" | "Manufacturing" | "Cross-industry";
+export type Industry =
+  | "Retail"
+  | "Finance"
+  | "Healthcare"
+  | "Media"
+  | "SaaS"
+  | "Manufacturing"
+  | "Real estate"
+  | "Cross-industry";
+
+export type UseCaseCategory = "llm" | "diffusion" | "cross";
+
+export const useCaseCategoryLabels: Record<UseCaseCategory, string> = {
+  llm: "Language & vision-language",
+  diffusion: "Image & video",
+  cross: "Infrastructure",
+};
 
 export type UseCase = {
   id: string;
@@ -8,7 +24,7 @@ export type UseCase = {
   models: string;
   deliverables: string;
   industry: Industry;
-  category: "llm" | "diffusion" | "cross";
+  category: UseCaseCategory;
 };
 
 export const industries: Industry[] = [
@@ -19,138 +35,139 @@ export const industries: Industry[] = [
   "Media",
   "SaaS",
   "Manufacturing",
+  "Real estate",
 ];
 
 export const useCases: UseCase[] = [
   {
     id: "enterprise-rag",
     title: "Enterprise knowledge assistant",
-    heroLine: "Grounded answers on wikis, SOPs, and tickets.",
+    heroLine: "Grounded answers from wikis, SOPs, and tickets.",
     description:
-      "Fine-tune and align open LLMs on your internal knowledge with citation-style behavior and retrieval-friendly embeddings. We build eval sets from real employee questions so improvements are measurable.",
-    models: "Llama 3.1, Qwen 2.5, Mistral + BGE/E5 embeddings",
-    deliverables: "Fine-tuned weights, RAG eval report, deployment guide",
+      "We fine-tune an open LLM for your terminology, answer format, and citation behavior, and pair it with a tuned embedding model for retrieval. Knowledge stays in your index rather than in the weights, so it can be updated without retraining. Evaluation sets come from real employee questions.",
+    models: "Llama 3.x, Qwen3, or Mistral, with BGE or E5 embeddings",
+    deliverables: "Fine-tuned weights, retrieval evaluation report, deployment guide",
     industry: "SaaS",
     category: "llm",
   },
   {
     id: "support-copilot",
     title: "Customer support copilot",
-    heroLine: "On-brand replies with escalation awareness.",
+    heroLine: "On-brand reply drafts with clear escalation rules.",
     description:
-      "Train models on historical tickets and macros for tone-aligned drafts across languages. Preference tuning reduces off-brand phrasing before agents review outputs.",
-    models: "Gemma, Llama instruct, Phi-4-mini (edge)",
-    deliverables: "SFT checkpoint, tone rubric, API integration notes",
+      "Trained on historical tickets and macros to draft replies in your tone, across languages. Preference tuning reduces off-brand phrasing before an agent reviews each draft.",
+    models: "Gemma 3, Llama 3.x Instruct, Phi-4-mini",
+    deliverables: "Fine-tuned checkpoint, tone rubric, API integration notes",
     industry: "SaaS",
     category: "llm",
   },
   {
     id: "legal-review",
-    title: "Legal & compliance document review",
-    heroLine: "Clause extraction with human-in-the-loop.",
+    title: "Contract and compliance review",
+    heroLine: "Clause extraction for attorney review.",
     description:
-      "Long-context fine-tunes flag risks and summarize agreements—they do not replace counsel. Outputs are structured for attorney review with audit logs.",
-    models: "Llama 3.1 70B-class, Qwen long-context",
-    deliverables: "Domain adapter, JSON schema prompts, red-team report",
+      "Long-context fine-tunes that flag risky clauses and summarize agreements. Output is structured for attorney review and logged for audit. The model supports counsel and does not replace them.",
+    models: "Llama 3.x (70B class), Qwen long-context models",
+    deliverables: "Domain adapter, structured-output prompts, red-team report",
     industry: "Finance",
     category: "llm",
   },
   {
     id: "healthcare-admin",
-    title: "Healthcare admin & clinical notes",
-    heroLine: "Summarization on de-identified data.",
+    title: "Healthcare administration",
+    heroLine: "Note summarization on de-identified data.",
     description:
-      "Administrative workflows only: coding hints and note summarization on properly de-identified datasets. We do not market diagnostic models on this site.",
-    models: "Domain SFT on approved open bases",
-    deliverables: "HIPAA-aware training plan, eval on synthetic+real admin sets",
+      "Administrative support only: note summarization and coding suggestions on de-identified data, with clinician review. We do not build diagnostic or treatment models.",
+    models: "Open bases selected after a data-use review",
+    deliverables: "Training plan for de-identified data, evaluation on approved samples",
     industry: "Healthcare",
     category: "llm",
   },
   {
     id: "financial-research",
-    title: "Financial research & reports",
-    heroLine: "Earnings and portfolio Q&A on licensed feeds.",
+    title: "Financial research and reporting",
+    heroLine: "Earnings and portfolio Q&A on licensed data.",
     description:
-      "Models tuned on your research corpus with strict refusal and freshness evals. Reasoning distills help multi-step report drafting with guardrails.",
-    models: "DeepSeek-R1 distill, Mixtral",
-    deliverables: "Checkpoints, benchmark vs analyst gold set",
+      "Models tuned on your research corpus, evaluated for refusal behavior and data freshness. Reasoning-oriented distills support multi-step report drafting, with an analyst reviewing every output.",
+    models: "DeepSeek-R1 distills, Qwen3, Mistral",
+    deliverables: "Checkpoints, benchmark against an analyst-written reference set",
     industry: "Finance",
     category: "llm",
   },
   {
     id: "code-assistant",
-    title: "Code assistant for private repos",
-    heroLine: "API-aware completion in your style.",
+    title: "Code assistant for private repositories",
+    heroLine: "Completion that knows your internal APIs.",
     description:
-      "Fine-tune on internal libraries and style guides. We exclude secrets via scanning and train only on approved repositories.",
-    models: "StarCoder2, DeepSeek-Coder, CodeLlama",
-    deliverables: "Code model, private eval harness, IDE integration notes",
+      "Fine-tuned on your internal libraries and style guides. We scan for secrets and train only on repositories you approve.",
+    models: "StarCoder2, DeepSeek-Coder, Code Llama",
+    deliverables: "Code model, private evaluation harness, IDE integration notes",
     industry: "SaaS",
     category: "llm",
   },
   {
     id: "sales-enablement",
-    title: "Sales enablement & proposals",
-    heroLine: "Battlecards and RFP snippets from CRM exports.",
+    title: "Sales enablement and proposals",
+    heroLine: "Battlecards and RFP drafts from CRM exports.",
     description:
-      "DPO aligns outputs with brand voice and compliance snippets. Sales teams get drafts—not auto-send—integrated into existing workflows.",
-    models: "Mid-size instruct models + preference data",
-    deliverables: "Aligned checkpoint, prompt library, CRM field mapping doc",
+      "Preference tuning with DPO aligns drafts with your brand voice and approved compliance language. Sales teams receive drafts inside existing tools; nothing is sent automatically.",
+    models: "Mid-size instruct models with preference data",
+    deliverables: "Aligned checkpoint, prompt library, CRM field-mapping document",
     industry: "SaaS",
     category: "llm",
   },
   {
     id: "visual-inspection",
-    title: "Visual inspection QA",
-    heroLine: "Defect notes from production line images.",
+    title: "Visual inspection reports",
+    heroLine: "Defect notes from production-line images.",
     description:
-      "Vision-language models emit structured JSON for MES integration. Training uses your labeled defect library with class balance reporting.",
-    models: "Qwen2-VL, Llama 3.2 Vision",
-    deliverables: "VLM fine-tune, JSON schema, offline eval on holdout lines",
+      "Vision-language models that return structured JSON for MES integration. Training uses your labeled defect library, with class-balance reporting.",
+    models: "Qwen2.5-VL, InternVL2",
+    deliverables: "Fine-tuned vision-language model, JSON schema, offline evaluation on held-out lines",
     industry: "Manufacturing",
     category: "llm",
   },
   {
     id: "ecom-photo",
-    title: "E-commerce product photography",
-    heroLine: "Consistent lighting from SKU references.",
+    title: "E-commerce product imagery",
+    heroLine: "Consistent lighting and backgrounds across a catalog.",
     description:
-      "LoRA trains on your packshots for background and lighting consistency at catalog scale. ControlNet preserves product geometry.",
-    models: "SDXL / FLUX LoRA + ControlNet",
-    deliverables: "LoRA pack, inference presets, brand safety filter",
+      "LoRAs trained on your packshots keep backgrounds and lighting consistent at catalog scale. ControlNet preserves product shape and proportions.",
+    models: "SDXL or FLUX.1 LoRA with ControlNet",
+    deliverables: "LoRA pack, inference presets, brand-safety filter",
     industry: "Retail",
     category: "diffusion",
   },
   {
     id: "fashion-lookbook",
-    title: "Fashion & apparel lookbooks",
-    heroLine: "Campaign style locked in a LoRA.",
+    title: "Fashion and apparel lookbooks",
+    heroLine: "A campaign look captured in a LoRA.",
     description:
-      "Multi-LoRA stacks separate fabric, lighting, and model identity where licensing allows. Creative teams get a scored style matrix.",
-    models: "FLUX, SDXL, multi-LoRA",
-    deliverables: "Style LoRAs, prompt cookbook, QA grid",
+      "Separate LoRAs for fabric, lighting, and model identity, combined where licensing and consent allow. Creative teams receive a scored style matrix.",
+    models: "SDXL or FLUX.1, multi-LoRA",
+    deliverables: "Style LoRAs, prompt guide, review grid",
     industry: "Retail",
     category: "diffusion",
   },
   {
     id: "real-estate",
-    title: "Real estate & interior staging",
-    heroLine: "Room style with layout control.",
+    title: "Virtual staging and interiors",
+    heroLine: "Furnished rooms with the layout left intact.",
     description:
-      "Depth- and canny-conditioned generation stages empty rooms without moving walls. MLS-compliant watermarking options available.",
-    models: "SDXL + ControlNet depth/canny",
-    deliverables: "LoRA + ControlNet bundle, staging playbook",
-    industry: "Retail",
+      "Depth- and edge-conditioned generation furnishes empty rooms without moving walls or openings. Optional on-image disclosure supports listing-service rules on virtually staged photos.",
+    models: "SDXL with ControlNet (depth, canny)",
+    deliverables: "LoRA and ControlNet bundle, staging workflow guide",
+    industry: "Real estate",
     category: "diffusion",
   },
   {
     id: "gaming-art",
-    title: "Gaming & entertainment concept art",
-    heroLine: "Character and environment packs.",
+    title: "Concept art for games and entertainment",
+    heroLine: "Character and environment style packs.",
     description:
-      "Train on style bibles and approved asset libraries. Pipelines support iterative refinement with fixed seed workflows.",
-    models: "SDXL, FLUX, Stable Cascade",
-    deliverables: "Style LoRAs, asset gen guide, NSFW policy filter",
+      "Trained on your style bible and approved asset libraries. Fixed-seed workflows support controlled, repeatable iteration.",
+    models: "SDXL, FLUX.1, Stable Diffusion 3.5",
+    deliverables: "Style LoRAs, generation guide, content-policy filter",
     industry: "Media",
     category: "diffusion",
   },
@@ -159,75 +176,75 @@ export const useCases: UseCase[] = [
     title: "Marketing creative at scale",
     heroLine: "Ad variants within brand guidelines.",
     description:
-      "Schnell-tier models for volume; dev-tier for hero assets. Eval rubrics score logo placement and color adherence.",
-    models: "FLUX schnell + dev",
-    deliverables: "Dual-tier workflow, brand checker prompts",
+      "FLUX.1 [schnell], which is Apache 2.0, handles volume work. FLUX.1 [dev] is used for hero assets only where a commercial license from Black Forest Labs is in place. Review rubrics score color adherence and logo placement.",
+    models: "FLUX.1 [schnell] and [dev]",
+    deliverables: "Two-tier workflow, brand-check prompts",
     industry: "Media",
     category: "diffusion",
   },
   {
     id: "architecture-viz",
     title: "Architectural visualization",
-    heroLine: "Facade and landscape iterations.",
+    heroLine: "Facade and landscape variations.",
     description:
-      "ControlNet keeps structural lines while exploring materials and context. Useful for pitch decks and client reviews.",
-    models: "SDXL + ControlNet",
+      "ControlNet holds structural lines while you explore materials and surroundings. Useful for client presentations and early design reviews.",
+    models: "SDXL with ControlNet",
     deliverables: "Material LoRAs, control presets",
-    industry: "Manufacturing",
+    industry: "Real estate",
     category: "diffusion",
   },
   {
     id: "avatars",
-    title: "Personalized avatars & characters",
-    heroLine: "Identity-consistent generation with consent.",
+    title: "Personalized characters and avatars",
+    heroLine: "Identity-consistent generation, with consent.",
     description:
-      "DreamBooth-style training only with documented consent and likeness rights. We refuse non-consensual identity projects.",
-    models: "DreamBooth / FLUX character LoRA",
+      "DreamBooth-style training only with documented consent and likeness rights. We decline projects that involve a person's likeness without it.",
+    models: "DreamBooth or FLUX.1 character LoRA",
     deliverables: "Character adapter, consent checklist, usage policy",
     industry: "Media",
     category: "diffusion",
   },
   {
     id: "packaging",
-    title: "Print & packaging mockups",
-    heroLine: "Label-accurate drafts for review.",
+    title: "Packaging and print mockups",
+    heroLine: "Fast visual drafts for review.",
     description:
-      "IP-Adapter locks logos while exploring substrates and finishes. Prepress teams get 3D-ish mockups without full CGI pipelines.",
-    models: "SDXL, IP-Adapter",
-    deliverables: "Mockup LoRA, logo-reference pipeline",
+      "IP-Adapter and reference conditioning keep a consistent brand look across substrates and finishes. Diffusion models cannot reliably reproduce exact logos or label text, so final artwork is composited in prepress.",
+    models: "SDXL with IP-Adapter",
+    deliverables: "Mockup LoRA, reference-image pipeline",
     industry: "Retail",
     category: "diffusion",
   },
   {
     id: "social-video",
-    title: "Short social video loops",
+    title: "Short-form video loops",
     heroLine: "Product spins and motion posters.",
     description:
-      "AnimateDiff and CogVideoX fine-tunes on short clips from your brand library. Duration and aspect ratio match platform specs.",
+      "AnimateDiff and CogVideoX fine-tuned on short clips from your brand library. Open video models generate a few seconds at a time, so we cover upscaling and frame interpolation for platform formats.",
     models: "AnimateDiff, CogVideoX",
-    deliverables: "Video LoRA, render recipe, codec export settings",
+    deliverables: "Video LoRA, render recipe, export settings",
     industry: "Media",
     category: "diffusion",
   },
   {
     id: "vpc-private",
-    title: "On-prem / VPC private model",
-    heroLine: "Data never leaves your cloud account.",
+    title: "Private-cloud and on-premises training",
+    heroLine: "Your data stays in your environment.",
     description:
-      "We train inside your AWS or Modal tenant with credentials you control. Artifacts land in your buckets—ideal for regulated industries.",
-    models: "Your choice of open stack",
-    deliverables: "VPC runbook, IAM template, trained weights in your storage",
+      "We train inside your AWS account or Modal workspace using credentials you control, and artifacts are written to your own storage. Suited to teams with data-residency or regulatory requirements.",
+    models: "Open model of your choice",
+    deliverables: "Runbook, IAM template, trained weights in your storage",
     industry: "Cross-industry",
     category: "cross",
   },
   {
     id: "lora-packs",
-    title: "Model merge & specialization packs",
-    heroLine: "Multiple LoRAs with an eval matrix.",
+    title: "Adapter libraries and merges",
+    heroLine: "Multiple LoRAs, tested together.",
     description:
-      "Creative and ML teams get a catalog of adapters with compatibility notes and merged presets where appropriate.",
-    models: "SDXL / FLUX ecosystems",
-    deliverables: "LoRA library, merge recipes, eval spreadsheet",
+      "A catalog of adapters with compatibility notes and tested merged presets, so creative and ML teams can combine styles predictably.",
+    models: "SDXL and FLUX.1 ecosystems",
+    deliverables: "LoRA library, merge recipes, evaluation sheet",
     industry: "Cross-industry",
     category: "cross",
   },

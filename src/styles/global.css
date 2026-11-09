@@ -188,6 +188,22 @@
     font-feature-settings: "kern" 1, "liga" 1;
   }
 
+  .site-wordmark {
+    font-family: var(--font-pixel);
+    @apply text-[13px] font-medium text-text;
+    letter-spacing: 0.06em;
+    font-variation-settings: "ELSH" 40;
+    font-feature-settings: "kern" 1;
+    text-rendering: optimizeLegibility;
+    transition: opacity 150ms var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    a.site-wordmark:hover {
+      opacity: 0.88;
+    }
+  }
+
   .section-kicker,
   .section-label {
     font-family: var(--font-pixel);

@@ -63,7 +63,10 @@ export function getBrandIcon(key: string | undefined): BrandIconDef | undefined 
   return brandIcons[key];
 }
 
-/** Primary org / product mark per model catalog id */
+/**
+ * Publisher mark per model catalog id.
+ * Only listed where the mark is the actual publisher; other models show no logo.
+ */
 export const modelBrandKey: Record<string, string> = {
   "llama-3": "meta",
   "llama-vision": "meta",
@@ -73,37 +76,22 @@ export const modelBrandKey: Record<string, string> = {
   gemma: "google",
   paligemma: "google",
   phi: "microsoft",
+  florence: "microsoft",
   deepseek: "deepseek",
   "deepseek-coder": "deepseek",
-  falcon: "meta",
-  olmo: "meta",
-  mpt: "huggingface",
-  yi: "deepseek",
-  internlm: "alibabacloud",
+  smollm: "huggingface",
+  smolvlm: "huggingface",
   starcoder: "huggingface",
-  nous: "huggingface",
-  llava: "meta",
-  internvl: "alibabacloud",
-  florence: "microsoft",
-  bge: "alibabacloud",
-  nomic: "huggingface",
-  "jina-embed": "google",
-  colbert: "huggingface",
+  "mistral-small": "mistralai",
+  pixtral: "mistralai",
+  "qwen-coder": "qwen",
+  "qwen-image": "qwen",
+  "phi-vision": "microsoft",
+  wan: "alibabacloud",
   sdxl: "stabilityai",
   sd15: "stabilityai",
-  "sdxl-turbo": "stabilityai",
   sd3: "stabilityai",
-  cascade: "stabilityai",
   flux: "blackforestlabs",
-  pixart: "bytedance",
-  kolors: "alibabacloud",
-  playground: "google",
-  auraflow: "huggingface",
   hunyuan: "tencent",
-  animatediff: "huggingface",
-  cogvideo: "bytedance",
-  controlnet: "stabilityai",
-  whisper: "huggingface",
   parakeet: "nvidia",
-  "xtts": "huggingface",
 };
