@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout title="About" description="Prime AI Company — open-model training on customer datasets.">
+  <section class="mx-auto max-w-3xl px-4 py-16 md:py-24">
+    <p class="section-label">About</p>
+    <h1 class="heading-display mt-2 text-3xl md:text-4xl">{site.name}</h1>
+    <p class="mt-6 text-lg text-muted">
+      We are a training agency focused on open LLMs and diffusion models. Clients bring domain data; we bring dataset engineering, GPU training, evaluation, and deployment documentation.
+    </p>
+
+    <h2 class="mt-12 text-xl font-semibold">Principles</h2>
+    <ul class="mt-4 space-y-4 text-muted">
+      <li>
+        <strong class="text-text">Your weights, your contract.</strong> Fine-tuned artifacts are delivered to you per statement of work. We do not train customer A’s data into customer B’s models.
+      </li>
+      <li>
+        <strong class="text-text">Open stacks.</strong> We prefer inspectable, self-hostable models over perpetual API rent when requirements allow.
+      </li>
+      <li>
+        <strong class="text-text">Safety by default.</strong> License review, consent for likeness training, and eval gates are part of standard delivery—not add-on surprises.
+      </li>
+      <li>
+        <strong class="text-text">Infrastructure you trust.</strong> Training runs on enterprise clouds with VPC options for regulated workloads.
+      </li>
+    </ul>
+
+    <p class="mt-12 text-sm text-muted">
+      New projects: <a href={`mailto:${site.emails.sales}`} class="text-accent hover:underline">{site.emails.sales}</a>
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout title="Contact" description="Contact Prime AI Company for model training projects.">
+  <section class="mx-auto max-w-2xl px-4 py-16 md:py-24 text-center">
+    <p class="section-label">Contact</p>
+    <h1 class="heading-display mt-2 text-3xl md:text-4xl">Talk to our team</h1>
+    <p class="mt-4 text-muted">For scoping, partnerships, and new training work, use the project form or email us directly.</p>
+
+    <div class="mt-10 space-y-4">
+      <p>
+        <span class="block text-xs uppercase text-muted">Projects</span>
+        <a href={`mailto:${site.emails.sales}`} class="text-lg text-accent hover:underline">{site.emails.sales}</a>
+      </p>
+      <p>
+        <span class="block text-xs uppercase text-muted">Legal & privacy</span>
+        <a href={`mailto:${site.emails.legal}`} class="text-lg text-accent hover:underline">{site.emails.legal}</a>
+      </p>
+    </div>
+
+    <a href="/get-started" class="btn-primary mt-10 inline-flex">Start project form</a>
+  </section>
+</BaseLayout>

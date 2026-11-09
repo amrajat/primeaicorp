@@ -1,0 +1,25 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { site } from "../../data/site";
+---
+
+<LegalLayout title="Cookie Policy">
+  <p>This Cookie Policy explains how {site.name} uses cookies and similar technologies on our website.</p>
+
+  <h2 id="what">What are cookies</h2>
+  <p>Cookies are small text files stored on your device. They may be session or persistent.</p>
+
+  <h2 id="use">Cookies we use</h2>
+  <ul>
+    <li><strong>Essential:</strong> required for security and form functionality.</li>
+    <li><strong>Analytics (optional):</strong> if enabled, Cloudflare Web Analytics helps us understand traffic in a privacy-friendly way without cross-site tracking for advertising.</li>
+  </ul>
+
+  <h2 id="choices">Your choices</h2>
+  <p>You can block cookies in your browser settings. Some features may not work if essential cookies are disabled.</p>
+
+  <h2 id="contact">Contact</h2>
+  <p>
+    <a href={`mailto:${site.emails.legal}`}>{site.emails.legal}</a>
+  </p>
+</LegalLayout>

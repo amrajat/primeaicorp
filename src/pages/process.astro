@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PartnerMarquee from "../components/PartnerMarquee.astro";
+import { processSteps, partners } from "../data/site";
+---
+
+<BaseLayout title="How it works" description="Our five-phase process from discovery to model handoff.">
+  <section class="mx-auto max-w-6xl px-4 py-16 md:py-24">
+    <p class="section-label">Process</p>
+    <h1 class="heading-display mt-2 text-3xl md:text-4xl">How we work with your team</h1>
+    <p class="mt-4 max-w-2xl text-muted">
+      Engagements are milestone-based. You get checkpoints—not a black box—at each phase.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-12">
+    <ol class="relative space-y-8 border-l border-border pl-8">
+      {
+        processSteps.map((s, i) => (
+          <li class="relative">
+            <span class="absolute -left-[2.35rem] flex h-8 w-8 items-center justify-center rounded-full border border-accent/50 bg-bg text-xs font-bold text-accent">
+              {i + 1}
+            </span>
+            <h2 class="text-xl font-semibold">{s.title}</h2>
+            <p class="text-sm text-accent">{s.duration}</p>
+            <p class="mt-2 text-muted">{s.detail}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <PartnerMarquee />
+
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <h2 class="text-xl font-semibold">Training infrastructure</h2>
+    <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+      {
+        partners.map((p) => (
+          <li class="glass-card p-5">
+            <a href={p.href} target="_blank" rel="noopener noreferrer" class="font-semibold hover:text-accent">
+              {p.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="mt-8 text-sm text-muted">
+      Stack: PyTorch, DeepSpeed, FSDP, bitsandbytes, PEFT, Diffusers, kohya-ss / ai-toolkit where appropriate.
+    </p>
+    <a href="/get-started" class="btn-primary mt-10 inline-flex">Start project</a>
+  </section>
+</BaseLayout>

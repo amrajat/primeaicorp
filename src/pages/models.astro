@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { models, modelFamilyLabels, type ModelFamily } from "../data/models";
+
+const families = Object.keys(modelFamilyLabels) as ModelFamily[];
+---
+
+<BaseLayout title="Models" description="Open LLM, diffusion, multimodal, embedding, and speech models we fine-tune on customer data.">
+  <section class="mx-auto max-w-6xl px-4 py-16 md:py-24">
+    <p class="section-label">Models</p>
+    <h1 class="heading-display mt-2 text-3xl md:text-4xl">Trainable model catalog</h1>
+    <p class="mt-4 max-w-2xl text-muted">
+      We fine-tune and adapt popular open stacks on your data. Final model choice depends on license, language, latency, and infra constraints.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-2" id="model-filters">
+      <button type="button" data-filter="all" class="filter-btn chip-active rounded-full border px-4 py-2 text-sm font-medium">All</button>
+      {
+        families.map((f) => (
+          <button type="button" data-filter={f} class="filter-btn rounded-full border border-border px-4 py-2 text-sm font-medium text-muted hover:text-text">
+            {modelFamilyLabels[f]}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" id="model-grid">
+      {
+        models.map((m) => (
+          <article data-family={m.family} class="model-card glass-card-hover p-5">
+            <span class="text-xs font-medium text-accent">{modelFamilyLabels[m.family]}</span>
+            <h2 class="mt-2 text-base font-semibold">{m.name}</h2>
+            <p class="mt-2 text-sm text-muted">{m.trainerNote}</p>
+            <p class="mt-3 text-xs text-muted/90">{m.licenseHint}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
+  const cards = document.querySelectorAll<HTMLElement>(".model-card");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const f = btn.dataset.filter;
+      buttons.forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle("chip-active", on);
+        b.classList.toggle("border-border", !on);
+        b.classList.toggle("text-muted", !on);
+      });
+      cards.forEach((c) => {
+        const match = f === "all" || c.dataset.family === f;
+        c.classList.toggle("hidden", !match);
+      });
+    });
+  });
+</script>

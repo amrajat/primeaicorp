@@ -1,0 +1,35 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { site } from "../../data/site";
+---
+
+<LegalLayout title="Security Overview">
+  <p>
+    {site.name} applies security practices appropriate to GPU training and sensitive customer datasets. This overview is informational and
+    may be supplemented in enterprise contracts.
+  </p>
+
+  <h2 id="data">Data protection</h2>
+  <ul>
+    <li>Transfer of datasets via encrypted channels and customer-controlled storage when possible.</li>
+    <li>Separation of customer projects and access control on training environments.</li>
+    <li>Optional training entirely within your AWS or Modal account.</li>
+  </ul>
+
+  <h2 id="access">Access control</h2>
+  <ul>
+    <li>Least-privilege access for engineering staff on active projects.</li>
+    <li>NDA and background checks for personnel handling production customer data where required.</li>
+  </ul>
+
+  <h2 id="retention">Retention & deletion</h2>
+  <p>
+    Training artifacts and copies of customer data are retained only as long as needed for delivery and warranty support, then deleted or
+    returned per the statement of work.
+  </p>
+
+  <h2 id="incident">Security contact</h2>
+  <p>
+    Report suspected incidents to <a href={`mailto:${site.emails.legal}`}>{site.emails.legal}</a> with subject line "Security."
+  </p>
+</LegalLayout>

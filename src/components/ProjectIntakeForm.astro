@@ -1,0 +1,134 @@
+---
+import { site, formOptions } from "../data/site";
+import { models } from "../data/models";
+import { useCases } from "../data/useCases";
+
+interface Props {
+  compact?: boolean;
+  prefillUseCase?: string;
+}
+
+const { compact = false, prefillUseCase = "" } = Astro.props;
+
+const urlParams = Astro.url.searchParams;
+const useCaseFromUrl = urlParams.get("use_case") ?? prefillUseCase;
+---
+
+<form
+  name="project-intake"
+  method="POST"
+  action="/get-started"
+  data-static-form-name="project-intake"
+  class="glass-card space-y-5 p-6 md:p-8"
+>
+  <input type="hidden" name="form-name" value="project-intake" />
+
+  {!compact && (
+    <div>
+      <h2 class="text-xl font-semibold">Tell us about your project</h2>
+      <p class="mt-1 text-sm text-muted">{site.budgetNote}</p>
+    </div>
+  )}
+
+  <div class:list={["grid gap-4", compact ? "grid-cols-1" : "sm:grid-cols-2"]}>
+    <div>
+      <label for="name" class="mb-1 block text-xs font-medium text-muted">Name *</label>
+      <input id="name" name="name" type="text" required class="input-field" autocomplete="name" />
+    </div>
+    <div>
+      <label for="email" class="mb-1 block text-xs font-medium text-muted">Work email *</label>
+      <input id="email" name="email" type="email" required class="input-field" autocomplete="email" />
+    </div>
+    <div class:list={[compact ? "" : "sm:col-span-2"]}>
+      <label for="company" class="mb-1 block text-xs font-medium text-muted">Company *</label>
+      <input id="company" name="company" type="text" required class="input-field" autocomplete="organization" />
+    </div>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label for="project_type" class="mb-1 block text-xs font-medium text-muted">Project type *</label>
+      <select id="project_type" name="project_type" required class="input-field">
+        {formOptions.projectTypes.map((t) => (
+          <option value={t}>{t}</option>
+        ))}
+      </select>
+    </div>
+    <div>
+      <label for="budget" class="mb-1 block text-xs font-medium text-muted">Estimated budget (USD) *</label>
+      <select id="budget" name="budget" required class="input-field">
+        {formOptions.budget.map((b) => (
+          <option value={b}>{b}</option>
+        ))}
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <label for="models_interest" class="mb-1 block text-xs font-medium text-muted">Models of interest</label>
+    <select id="models_interest" name="models_interest" multiple class="input-field min-h-[7rem]" size={compact ? 4 : 6}>
+      {models.map((m) => (
+        <option value={m.id}>{m.name}</option>
+      ))}
+    </select>
+    <p class="mt-1 text-xs text-muted">Hold Cmd/Ctrl to select multiple, or describe in the message below.</p>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label for="use_case" class="mb-1 block text-xs font-medium text-muted">Use case *</label>
+      <select id="use_case" name="use_case" required class="input-field">
+        <option value="">Select…</option>
+        {useCases.map((u) => (
+          <option value={u.id} selected={u.id === useCaseFromUrl}>{u.title}</option>
+        ))}
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div>
+      <label for="dataset" class="mb-1 block text-xs font-medium text-muted">Dataset readiness *</label>
+      <select id="dataset" name="dataset" required class="input-field">
+        {formOptions.datasetReadiness.map((d) => (
+          <option value={d}>{d}</option>
+        ))}
+      </select>
+    </div>
+    <div>
+      <label for="timeline" class="mb-1 block text-xs font-medium text-muted">Timeline *</label>
+      <select id="timeline" name="timeline" required class="input-field">
+        {formOptions.timeline.map((t) => (
+          <option value={t}>{t}</option>
+        ))}
+      </select>
+    </div>
+    <div>
+      <label for="deployment" class="mb-1 block text-xs font-medium text-muted">Deployment target *</label>
+      <select id="deployment" name="deployment" required class="input-field">
+        {formOptions.deployment.map((d) => (
+          <option value={d}>{d}</option>
+        ))}
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <label for="message" class="mb-1 block text-xs font-medium text-muted">Message</label>
+    <textarea id="message" name="message" rows={compact ? 3 : 5} class="input-field resize-y" placeholder="Dataset size, compliance needs, target languages…" />
+  </div>
+
+  <div class="flex items-start gap-3">
+    <input id="consent" name="consent" type="checkbox" value="yes" required class="mt-1 h-4 w-4 rounded border-border accent-primary" />
+    <label for="consent" class="text-xs text-muted">
+      I agree to the <a href="/legal/privacy" class="text-accent hover:underline">Privacy Policy</a> and{" "}
+      <a href="/legal/terms" class="text-accent hover:underline">Terms of Service</a>.
+    </label>
+  </div>
+
+  <button type="submit" class="btn-primary w-full sm:w-auto">Submit project inquiry</button>
+
+  <p class="text-xs text-muted">
+    Submissions are reviewed by our team at{" "}
+    <a href={`mailto:${site.emails.sales}`} class="text-accent hover:underline">{site.emails.sales}</a>.
+    Enable Cloudflare Pages Forms in your dashboard to receive entries by email.
+  </p>
+</form>

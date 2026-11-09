@@ -1,0 +1,72 @@
+---
+import { site, navLinks } from "../data/site";
+import LogoMark from "./LogoMark.astro";
+
+const path = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-md transition-[box-shadow,border-color] duration-200 [&.is-scrolled]:border-border-strong [&.is-scrolled]:shadow-[0_4px_24px_rgb(0_0_0/0.35)]">
+  <div class="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 lg:px-8">
+    <a href="/" class="flex items-center gap-2.5 text-sm font-medium text-text">
+      <LogoMark />
+      <span class="hidden font-elsh-square sm:inline">{site.shortName}</span>
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Main">
+      {
+        navLinks.map((link) => {
+          const active = path === link.href || path.startsWith(link.href + "/");
+          return (
+            <a
+              href={link.href}
+              class:list={[
+                "rounded-md px-2.5 py-1.5 text-[13px] font-medium transition-colors duration-150",
+                active ? "text-text" : "text-muted hover:text-text",
+              ]}
+            >
+              {link.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="/get-started" class="btn-primary hidden text-[13px] sm:inline-flex">Start project</a>
+      <button
+        type="button"
+        id="nav-toggle"
+        class="btn-secondary inline-flex h-9 w-9 items-center justify-center p-0 md:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Open menu"
+      >
+        <svg class="h-4 w-4" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav" class="hidden border-t border-border bg-surface md:hidden" role="dialog">
+    <nav class="flex flex-col gap-0.5 px-4 py-3" aria-label="Mobile">
+      {
+        navLinks.map((link) => (
+          <a href={link.href} class="rounded-md px-3 py-2 text-sm text-muted hover:bg-elevated hover:text-text">
+            {link.label}
+          </a>
+        ))
+      }
+      <a href="/get-started" class="btn-primary mt-2 justify-center">Start project</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const panel = document.getElementById("mobile-nav");
+  toggle?.addEventListener("click", () => {
+    const hidden = panel?.classList.toggle("hidden");
+    toggle.setAttribute("aria-expanded", String(!hidden));
+  });
+</script>

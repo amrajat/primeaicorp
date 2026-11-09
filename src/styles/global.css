@@ -1,0 +1,293 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@font-face {
+  font-family: "Geist Serif";
+  src: url("/fonts/GeistSerifVF.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Dark UI + single warm cream accent (no blue / green) */
+@theme {
+  --color-bg: #08090a;
+  --color-surface: #0f1011;
+  --color-surface-2: #141516;
+  --color-elevated: #1a1b1e;
+  --color-text: #eeeff1;
+  --color-muted: #9a9da6;
+  --color-faint: #656870;
+  --color-primary: #e5e0d6;
+  --color-primary-hover: #f2ede5;
+  --color-primary-foreground: #0a0a0b;
+  --color-primary-muted: rgb(229 224 214 / 0.14);
+  --color-primary-subtle: rgb(229 224 214 / 0.08);
+  /* Legacy utility names → cream only */
+  --color-accent: var(--color-primary);
+  --color-accent-hover: var(--color-primary-hover);
+  --color-accent-soft: var(--color-primary-muted);
+  --color-secondary: var(--color-primary);
+  --color-secondary-hover: var(--color-primary-hover);
+  --color-secondary-muted: var(--color-primary-muted);
+  --color-border: rgb(255 255 255 / 0.06);
+  --color-border-strong: rgb(255 255 255 / 0.1);
+  --font-sans: "Geist Serif", Georgia, "Times New Roman", serif;
+  --font-display: "Geist Serif", Georgia, "Times New Roman", serif;
+  --font-mono: "Geist Serif", Georgia, "Times New Roman", serif;
+  --shadow-panel:
+    0 0 0 1px rgb(255 255 255 / 0.06),
+  0 8px 24px rgb(0 0 0 / 0.45),
+  0 2px 8px rgb(0 0 0 / 0.3);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-bg font-sans text-[15px] leading-relaxed text-text antialiased;
+    font-weight: 400;
+    font-variation-settings: "ELSH" 0;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+
+  ::selection {
+    background: var(--color-primary-muted);
+    color: var(--color-text);
+  }
+}
+
+/* Geist Serif shape axis (ELSH) — glyph personality */
+@layer utilities {
+  .font-elsh-regular {
+    font-variation-settings: "ELSH" 0;
+  }
+
+  .font-elsh-square {
+    font-variation-settings: "ELSH" 25;
+  }
+
+  .font-elsh-triangle {
+    font-variation-settings: "ELSH" 50;
+  }
+
+  .font-elsh-heart {
+    font-variation-settings: "ELSH" 100;
+  }
+}
+
+@layer components {
+  .panel {
+    border-radius: var(--radius-xl);
+    border: 1px solid transparent;
+    background: var(--color-surface-2);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .panel-hover {
+    border-radius: var(--radius-xl);
+    border: 1px solid transparent;
+    background: var(--color-surface-2);
+    box-shadow: var(--shadow-panel);
+    transition:
+      border-color 200ms var(--ease-out),
+      transform 200ms var(--ease-out),
+      box-shadow 200ms var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .panel-hover:hover {
+      border-color: var(--color-border-strong);
+      transform: translateY(-1px);
+    }
+  }
+
+  .heading-display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.06;
+    font-variation-settings: "ELSH" 25;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    @apply text-text;
+  }
+
+  .lead {
+    @apply text-base font-normal text-muted;
+    line-height: 1.65;
+    max-width: 36rem;
+    font-variation-settings: "ELSH" 0;
+  }
+
+  .heading-section {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.18;
+    font-variation-settings: "ELSH" 25;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .section-kicker {
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-primary;
+    font-variation-settings: "ELSH" 50;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .text-link {
+    @apply text-primary transition-colors duration-150;
+    transition-property: color;
+    font-variation-settings: "ELSH" 0;
+  }
+
+  @media (hover: hover) {
+    .text-link:hover {
+      color: var(--color-primary-hover);
+    }
+  }
+
+  .stat-value {
+    @apply text-[1.35rem] font-semibold tracking-tight text-primary;
+    font-variation-settings: "ELSH" 25;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "kern" 1, "tnum" 1;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-[13px] font-semibold;
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+    border: 1px solid transparent;
+    font-variation-settings: "ELSH" 0;
+    transition:
+      background-color 150ms var(--ease-out),
+      transform 150ms ease-out;
+    transition-property: background-color, transform;
+  }
+
+  @media (hover: hover) {
+    .btn-primary:hover {
+      background: var(--color-primary-hover);
+    }
+  }
+
+  .btn-primary:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2.5 text-sm font-medium text-text;
+    border-color: var(--color-border-strong);
+    background: var(--color-surface);
+    font-variation-settings: "ELSH" 0;
+    transition:
+      background-color 150ms var(--ease-out),
+      border-color 150ms var(--ease-out),
+      transform 150ms ease-out;
+    transition-property: background-color, border-color, transform;
+  }
+
+  @media (hover: hover) {
+    .btn-secondary:hover {
+      background: var(--color-elevated);
+      border-color: rgb(229 224 214 / 0.22);
+    }
+  }
+
+  .btn-secondary:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  .btn-outline-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2.5 text-[13px] font-semibold text-primary;
+    border-color: rgb(229 224 214 / 0.35);
+    background: var(--color-primary-subtle);
+    font-variation-settings: "ELSH" 0;
+    transition:
+      background-color 150ms var(--ease-out),
+      border-color 150ms var(--ease-out),
+      transform 150ms ease-out;
+    transition-property: background-color, border-color, transform;
+  }
+
+  @media (hover: hover) {
+    .btn-outline-primary:hover {
+      background: var(--color-primary-muted);
+      border-color: rgb(229 224 214 / 0.5);
+    }
+  }
+
+  .btn-outline-primary:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  .tab-pill {
+    @apply rounded-full px-3 py-1.5 text-xs font-medium text-muted;
+    font-variation-settings: "ELSH" 0;
+    transition: color 150ms var(--ease-out), background-color 150ms var(--ease-out);
+    transition-property: color, background-color;
+  }
+
+  .tab-pill-active {
+    @apply bg-elevated text-primary;
+    box-shadow: 0 0 0 1px rgb(229 224 214 / 0.2);
+    font-variation-settings: "ELSH" 25;
+  }
+
+  .input-field {
+    @apply w-full rounded-md border bg-surface px-3 py-2.5 text-sm text-text;
+    border-color: var(--color-border-strong);
+    font-variation-settings: "ELSH" 0;
+    transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
+    transition-property: border-color, box-shadow;
+  }
+
+  .input-field::placeholder {
+    color: var(--color-faint);
+  }
+
+  .input-field:focus {
+    outline: none;
+    border-color: rgb(229 224 214 / 0.45);
+    box-shadow: 0 0 0 3px var(--color-primary-muted);
+  }
+
+  .chip-active {
+    @apply border-primary/40 bg-primary-muted text-primary;
+    font-variation-settings: "ELSH" 25;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+
+  .sr-only {
+    @apply absolute m-[-1px] h-px w-px overflow-hidden p-0 whitespace-nowrap;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+}

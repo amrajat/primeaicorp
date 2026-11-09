@@ -1,0 +1,53 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { site } from "../../data/site";
+---
+
+<LegalLayout title="Terms of Service">
+  <p>
+    These Terms of Service ("Terms") govern your use of the {site.name} website and any preview discussions before a signed statement of
+    work. Professional services are governed by a separate contract when executed.
+  </p>
+
+  <h2 id="services">Services</h2>
+  <p>
+    We provide AI model training, dataset engineering, evaluation, and related consulting on open and open-weight model stacks. We do not
+    guarantee specific business outcomes, accuracy in production, or regulatory clearance without an explicit compliance engagement.
+  </p>
+
+  <h2 id="ip">Intellectual property</h2>
+  <p>
+    Unless otherwise stated in a statement of work, deliverables such as fine-tuned weights, LoRAs, and documentation created specifically
+    for your paid engagement are assigned or licensed to you as specified in that statement of work. We retain rights in our pre-existing
+    methodologies, tools, and generic know-how.
+  </p>
+
+  <h2 id="acceptable">Acceptable use</h2>
+  <p>
+    You agree to comply with our <a href="/legal/acceptable-use">Acceptable Use Policy</a>. We may refuse or terminate engagements that
+    violate law, model licenses, or safety policies.
+  </p>
+
+  <h2 id="disclaimer">Disclaimer</h2>
+  <p>
+    THE WEBSITE AND PRE-SALES MATERIALS ARE PROVIDED "AS IS." MODEL OUTPUTS MAY BE INCORRECT OR UNSAFE WITHOUT HUMAN REVIEW. YOU ARE
+    RESPONSIBLE FOR DEPLOYMENT GUARDRAILS.
+  </p>
+
+  <h2 id="liability">Limitation of liability</h2>
+  <p>
+    TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE ARE NOT LIABLE FOR INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES. OUR AGGREGATE LIABILITY
+    ARISING FROM WEBSITE USE IS LIMITED TO ONE HUNDRED U.S. DOLLARS ($100) EXCEPT WHERE A SIGNED STATEMENT OF WORK PROVIDES OTHERWISE.
+  </p>
+
+  <h2 id="law">Governing law</h2>
+  <p>
+    These Terms are governed by the laws specified in your master services agreement, or otherwise the laws of our principal place of business,
+    without regard to conflict-of-law rules.
+  </p>
+
+  <h2 id="contact">Contact</h2>
+  <p>
+    <a href={`mailto:${site.emails.legal}`}>{site.emails.legal}</a>
+  </p>
+</LegalLayout>

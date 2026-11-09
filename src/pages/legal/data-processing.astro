@@ -1,0 +1,45 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { site, partners } from "../../data/site";
+---
+
+<LegalLayout title="Data Processing Addendum (Summary)">
+  <p>
+    This page summarizes our data processing practices for business customers. A full Data Processing Addendum (DPA) is available on request
+    by contacting <a href={`mailto:${site.emails.legal}`}>{site.emails.legal}</a>.
+  </p>
+
+  <h2 id="roles">Roles</h2>
+  <p>
+    For customer-provided training data, the customer is typically the <strong>data controller</strong> and Prime AI Company acts as a{" "}
+    <strong>data processor</strong>, processing data only on documented instructions in the statement of work.
+  </p>
+
+  <h2 id="subprocessors">Subprocessors</h2>
+  <p>We may use vetted subprocessors for compute and storage, including:</p>
+  <ul>
+    {partners.slice(0, 4).map((p) => (
+      <li>{p.name}</li>
+    ))}
+  </ul>
+  <p>We will notify customers of material subprocessor changes where contractually required.</p>
+
+  <h2 id="security">Security measures</h2>
+  <ul>
+    <li>Encryption in transit (TLS) for data transfer.</li>
+    <li>Role-based access to training environments.</li>
+    <li>Customer-VPC or isolated cloud accounts where contracted.</li>
+    <li>Deletion or return of data per SOW after project completion.</li>
+  </ul>
+
+  <h2 id="requests">Data subject requests</h2>
+  <p>
+    We assist controllers with reasonable requests to access, correct, or delete personal data in training sets, subject to technical
+    constraints and legal holds.
+  </p>
+
+  <h2 id="contact">Full DPA</h2>
+  <p>
+    Email <a href={`mailto:${site.emails.legal}`}>{site.emails.legal}</a> for a countersigned DPA.
+  </p>
+</LegalLayout>

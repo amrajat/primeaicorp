@@ -1,0 +1,44 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { site, legalLinks } from "../data/site";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description ?? `${title} for ${site.name}`}>
+  <div class="mx-auto max-w-3xl px-4 py-16 md:py-24">
+  <p class="section-label mb-3">Legal</p>
+  <h1 class="heading-display text-3xl md:text-4xl">{title}</h1>
+  <p class="mt-2 text-sm text-muted">Last updated: {site.lastLegalUpdate}</p>
+  <p class="mt-4 text-sm text-muted">
+    Questions: <a class="text-accent hover:underline" href={`mailto:${site.emails.legal}`}>{site.emails.legal}</a>
+  </p>
+
+  <nav class="mt-8 flex flex-wrap gap-2 border-b border-border pb-6" aria-label="Legal documents">
+    {
+      legalLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            "rounded-full border px-3 py-1 text-xs font-medium transition",
+            Astro.url.pathname === link.href
+              ? "chip-active"
+              : "border-border text-muted hover:border-white/20 hover:text-text",
+          ]}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <article class="prose prose-invert prose-sm md:prose-base mt-10 max-w-none prose-headings:font-semibold prose-headings:text-text prose-p:text-muted prose-li:text-muted prose-a:text-accent hover:prose-a:underline">
+  <slot />
+  </article>
+  </div>
+</BaseLayout>

@@ -1,0 +1,50 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { site } from "../../data/site";
+---
+
+<LegalLayout title="Privacy Policy">
+  <p>
+    Prime AI Company ("we," "us," or "our") respects your privacy. This Privacy Policy describes how we collect, use, and share
+    personal information when you visit primeaicorp.com, submit forms, or engage our training services.
+  </p>
+
+  <h2 id="collect">Information we collect</h2>
+  <ul>
+    <li><strong>Contact and project data:</strong> name, email, company, and information you provide in the project intake form.</li>
+    <li><strong>Training data:</strong> datasets you provide for model training are processed under contract, not for our marketing analytics.</li>
+    <li><strong>Technical data:</strong> IP address, browser type, and pages visited (via privacy-oriented analytics if enabled).</li>
+    <li><strong>Communications:</strong> emails and messages with {site.emails.sales} or {site.emails.legal}.</li>
+  </ul>
+
+  <h2 id="use">How we use information</h2>
+  <ul>
+    <li>Respond to inquiries and deliver contracted training services.</li>
+    <li>Operate, secure, and improve our website.</li>
+    <li>Comply with legal obligations and enforce our Terms.</li>
+    <li>We do not sell your personal information.</li>
+  </ul>
+
+  <h2 id="training-data">Customer training data</h2>
+  <p>
+    Customer datasets are isolated per engagement. We do not use one customer's training data to fine-tune models for another customer
+    without explicit permission. Retention and deletion follow the statement of work and Data Processing Addendum.
+  </p>
+
+  <h2 id="share">Sharing</h2>
+  <p>
+    We may share data with infrastructure subprocessors (e.g., cloud GPU providers) only as needed to perform services, under
+    confidentiality and security obligations. See the <a href="/legal/data-processing">Data Processing</a> summary.
+  </p>
+
+  <h2 id="rights">Your rights</h2>
+  <p>
+    Depending on your location, you may have rights to access, correct, delete, or restrict processing of personal information. Contact{" "}
+    <a href={`mailto:${site.emails.legal}`}>{site.emails.legal}</a> to exercise these rights.
+  </p>
+
+  <h2 id="contact">Contact</h2>
+  <p>
+    Privacy questions: <a href={`mailto:${site.emails.legal}`}>{site.emails.legal}</a>
+  </p>
+</LegalLayout>

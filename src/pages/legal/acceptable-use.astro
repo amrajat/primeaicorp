@@ -1,0 +1,26 @@
+---
+import LegalLayout from "../../layouts/LegalLayout.astro";
+import { site } from "../../data/site";
+---
+
+<LegalLayout title="Acceptable Use Policy">
+  <p>You may not use our services or website to:</p>
+
+  <ul>
+    <li>Violate applicable law or export control rules.</li>
+    <li>Train models on child sexual abuse material (CSAM) or distribute CSAM.</li>
+    <li>Create non-consensual intimate imagery or train likeness models without documented consent and rights.</li>
+    <li>Infringe intellectual property, privacy, or publicity rights.</li>
+    <li>Develop malware, fraud systems, or automated harassment at scale.</li>
+    <li>Circumvent safety measures of base model providers in violation of their licenses.</li>
+  </ul>
+
+  <p>
+    We reserve the right to refuse projects, suspend access, and report illegal content to authorities where required by law.
+  </p>
+
+  <h2 id="contact">Report violations</h2>
+  <p>
+    <a href={`mailto:${site.emails.legal}`}>{site.emails.legal}</a>
+  </p>
+</LegalLayout>

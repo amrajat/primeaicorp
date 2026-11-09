@@ -1,0 +1,53 @@
+---
+import { site, navLinks, legalLinks, partners } from "../data/site";
+---
+
+<footer class="border-t border-border bg-surface">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 lg:grid-cols-4 lg:px-8">
+    <div>
+      <p class="text-sm font-medium">{site.name}</p>
+      <p class="mt-2 text-sm text-muted">{site.tagline}</p>
+      <p class="mt-4 text-sm">
+        <a href={`mailto:${site.emails.sales}`} class="text-link">{site.emails.sales}</a>
+      </p>
+    </div>
+    <div>
+      <p class="text-xs font-medium uppercase tracking-wide text-faint">Company</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        <li><a href="/about" class="text-muted hover:text-text">About</a></li>
+        <li><a href="/process" class="text-muted hover:text-text">Process</a></li>
+        <li><a href="/contact" class="text-muted hover:text-text">Contact</a></li>
+        <li><a href="/get-started" class="text-link">Start project</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-xs font-medium uppercase tracking-wide text-faint">Expertise</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        {navLinks.slice(0, 3).map((l) => (
+          <li>
+            <a href={l.href} class="text-muted hover:text-text">{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <p class="text-xs font-medium uppercase tracking-wide text-faint">Legal</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        {legalLinks.map((l) => (
+          <li>
+            <a href={l.href} class="text-muted hover:text-text">{l.label}</a>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 text-xs text-faint">
+        Legal: <a href={`mailto:${site.emails.legal}`} class="text-link">{site.emails.legal}</a>
+      </p>
+    </div>
+  </div>
+  <div class="border-t border-border py-5">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 text-xs text-faint md:flex-row lg:px-8">
+      <p>© {new Date().getFullYear()} {site.name}</p>
+      <p>{partners.map((p) => p.name).join(" · ")}</p>
+    </div>
+  </div>
+</footer>

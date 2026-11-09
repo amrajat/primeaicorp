@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { useCases, industries } from "../data/useCases";
+---
+
+<BaseLayout title="Use cases" description="Enterprise RAG, diffusion brand LoRA, VPC training, and more applications for custom AI models.">
+  <section class="mx-auto max-w-6xl px-4 py-16 md:py-24">
+    <p class="section-label">Use cases</p>
+    <h1 class="heading-display mt-2 text-3xl md:text-4xl">Where trained models create value</h1>
+    <p class="mt-4 max-w-2xl text-muted">Filter by industry, then start a project brief pre-filled for your scenario.</p>
+
+    <div class="mt-8 flex flex-wrap gap-2" id="industry-filters">
+      <button type="button" data-industry="all" class="ind-btn chip-active rounded-full border px-4 py-2 text-sm font-medium">All</button>
+      {
+        industries.map((ind) => (
+          <button type="button" data-industry={ind} class="ind-btn rounded-full border border-border px-4 py-2 text-sm font-medium text-muted hover:text-text">
+            {ind}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2" id="usecase-grid">
+      {
+        useCases.map((u) => (
+          <article data-industry={u.industry} class="usecase-card glass-card-hover flex flex-col p-6">
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">{u.industry}</span>
+              <span class="rounded-full border border-border px-2 py-0.5 text-xs text-muted">{u.category}</span>
+            </div>
+            <h2 class="mt-4 text-xl font-semibold">{u.title}</h2>
+            <p class="mt-1 text-sm font-medium text-text/90">{u.heroLine}</p>
+            <p class="mt-3 flex-1 text-sm text-muted">{u.description}</p>
+            <p class="mt-4 text-xs text-muted">
+              <span class="text-text">Models:</span> {u.models}
+            </p>
+            <p class="mt-1 text-xs text-muted">
+              <span class="text-text">Deliverables:</span> {u.deliverables}
+            </p>
+            <a href={`/get-started?use_case=${u.id}`} class="btn-secondary mt-6 inline-flex w-fit">Start this use case</a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const indBtns = document.querySelectorAll<HTMLButtonElement>(".ind-btn");
+  const useCards = document.querySelectorAll<HTMLElement>(".usecase-card");
+
+  indBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const ind = btn.dataset.industry;
+      indBtns.forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle("chip-active", on);
+        b.classList.toggle("border-border", !on);
+        b.classList.toggle("text-muted", !on);
+      });
+      useCards.forEach((c) => {
+        const match = ind === "all" || c.dataset.industry === ind;
+        c.classList.toggle("hidden", !match);
+      });
+    });
+  });
+</script>

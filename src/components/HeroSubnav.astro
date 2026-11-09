@@ -1,0 +1,23 @@
+---
+const links = [
+  { href: "/process", label: "How it works" },
+  { href: "/models", label: "Models" },
+  { href: "/services", label: "Services" },
+  { href: "/use-cases", label: "Use cases" },
+  { href: "/get-started", label: "Get started ↗" },
+];
+---
+
+<nav class="border-b border-border bg-bg" aria-label="Page sections">
+  <ul class="mx-auto flex max-w-7xl gap-6 overflow-x-auto px-4 py-3 text-sm lg:px-8">
+    {
+      links.map((l) => (
+        <li class="shrink-0">
+          <a href={l.href} class="whitespace-nowrap text-muted hover:text-text">
+            {l.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
