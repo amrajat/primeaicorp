@@ -1,5 +1,5 @@
-function formDataToObject(formData) {
-  const output = {};
+function formDataToObject(formData: FormData) {
+  const output: Record<string, string | string[]> = {};
   for (const [key, value] of formData.entries()) {
     const text = typeof value === "string" ? value : value.name ?? "";
     if (key === "form-name") continue;
@@ -15,24 +15,28 @@ function formDataToObject(formData) {
   return output;
 }
 
-function formatEmailBody(data) {
+function formatEmailBody(data: Record<string, string | string[]>) {
   return Object.entries(data)
     .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`)
     .join("\n");
 }
 
-/**
- * @param {FormData} formData
- * @param {{ RESEND_API_KEY?: string, FORM_NOTIFY_EMAIL?: string, RESEND_FROM?: string }} env
- */
-export async function handleProjectIntake(formData, env = {}) {
+export type ProjectIntakeEnv = {
+  RESEND_API_KEY?: string;
+  FORM_NOTIFY_EMAIL?: string;
+  RESEND_FROM?: string;
+};
+
+export async function handleProjectIntake(
+  formData: FormData,
+  env: ProjectIntakeEnv = {},
+) {
   try {
     const payload = formDataToObject(formData);
 
     const notifyEmail = env.FORM_NOTIFY_EMAIL ?? "ai@primeaicorp.com";
     const resendKey = env.RESEND_API_KEY;
-    const from =
-      env.RESEND_FROM ?? "Prime AI Company <onboarding@resend.dev>";
+    const from = env.RESEND_FROM ?? "Prime AI Company <onboarding@resend.dev>";
 
     if (resendKey) {
       const company =

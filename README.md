@@ -1,44 +1,46 @@
 # Prime AI Company — Marketing Site
 
-Static marketing site for **Prime AI Company**, built with [Astro](https://astro.build), Tailwind CSS v4, and deployed to **Cloudflare Pages** from GitHub.
+Static marketing site for **Prime AI Company**, built with [Astro](https://astro.build), Tailwind CSS v4, and deployed to **Cloudflare Workers** (static assets + server route) from GitHub.
 
 ## Commands
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321
-npm run build    # output → dist/
-npm run preview
+npm run dev       # http://localhost:4321 (Worker runtime via platformProxy + .dev.vars)
+npm run build     # dist/client + dist/server (Worker)
+npm run preview   # production-like local Worker after build
 ```
 
-## Cloudflare Pages deployment
+## Cloudflare deployment
 
-1. Push this repository to GitHub.
-2. In [Cloudflare Dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → **Connect to Git**.
-3. Build settings:
-   - **Framework preset:** Astro
+The intake API is an **Astro server route** (`src/pages/api/project-intake.ts`, `prerender = false`) via [`@astrojs/cloudflare`](https://docs.astro.build/en/guides/integrations-guide/cloudflare/). Pages Functions alone were not being attached to this project; the Worker bundles static files and `/api/project-intake`.
+
+### Git-connected Worker / Pages (recommended)
+
+1. [Cloudflare Dashboard](https://dash.cloudflare.com) → **Workers & Pages** → connect **`amrajat/primeaicorp`** (`main`).
+2. **Build settings**
    - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-   - **Node.js version:** 22 (matches `package.json` engines)
-4. Add custom domain `primeaicorp.com` (and optional `www` redirect via `public/_redirects`).
-5. **Project intake form (Pages Functions):** Cloudflare Pages does **not** have a Netlify-style **Forms** toggle in project settings. Submissions are handled by a [Pages Function](https://developers.cloudflare.com/pages/functions/) at `functions/api/project-intake.js` (see the [HTML forms tutorial](https://developers.cloudflare.com/pages/tutorials/forms/)). The form on `/get-started` POSTs to `/api/project-intake`; the UI shows success on the same page (`?submitted=true`).
-   - Keep the repo **`/functions`** folder at the project root (same level as `package.json`), not inside `dist/`. Cloudflare’s Git integration compiles Functions from that folder alongside **`dist/`**.
-   - `public/_routes.json` limits Function invocations to `/api/*` (static pages stay free-tier static).
-   - **Build settings:** use only **Build command** `npm run build` and **Build output directory** `dist`. Do **not** add a custom **Deploy command** (e.g. `npx wrangler deploy`) and do **not** commit `wrangler.toml` for this setup—it makes CI run Worker deploy and the build fails.
-   - **Smoke test after deploy:** `curl -I https://primeaicorp.com/api/project-intake` should return **`405 Method Not Allowed`** (not `404`). `404` means the Function did not deploy—check **Deployments** → latest build log for Functions compile errors and that **Root directory** is `/`.
-   - In the Pages project → **Settings** → **Environment variables**, set:
-     - `RESEND_API_KEY` — from [Resend](https://resend.com) (or another provider you wire in the Function)
-     - `FORM_NOTIFY_EMAIL` — optional, defaults to `ai@primeaicorp.com`
-     - `RESEND_FROM` — verified sender (e.g. `Prime AI Company <hello@primeaicorp.com>`)
-   - Without `RESEND_API_KEY`, submissions still return success but only appear in **Workers & Pages** → your project → **Logs** (Real-time logs).
-   - **Local testing:** put secrets in **`.dev.vars`** (repo root; gitignored), then `npm run dev` and submit on **Get started**. Astro dev serves `POST /api/project-intake` via the same handler as production (reads `.dev.vars`).
-   - Optional production-like check: `npm run build` && `npx wrangler pages dev dist --compatibility-date=2024-11-01`.
+   - **Deploy command:** `npm run deploy:cloudflare`
+   - **Build output directory:** leave **empty** (do not use `dist` only—that skips the Worker)
+   - **Node.js version:** `22` (or match `package.json` engines)
+3. **Environment variables** (Production + Preview): `RESEND_API_KEY`, optional `FORM_NOTIFY_EMAIL`, `RESEND_FROM`.
+4. **Secrets for local dev:** copy `.dev.vars.example` → `.dev.vars` (gitignored).
+5. **Custom domain:** attach `primeaicorp.com` to this **Worker** (same place you had Pages). Optional `www` redirect in `public/_redirects`.
+6. **Smoke test:** `curl -I https://primeaicorp.com/api/project-intake` → **405** (not 404). Then submit on `/get-started/`.
+
+If you previously set **Deploy command** to bare `npx wrangler deploy`, replace it with `npm run deploy:cloudflare` (uses `dist/server/wrangler.json` from the Astro build).
+
+## Project intake form
+
+- Form POSTs to `/api/project-intake`; success UI on `/get-started?submitted=true`.
+- Handler: `src/lib/project-intake-handler.ts` (Resend optional).
+- Without `RESEND_API_KEY`, submissions return success and log in **Workers & Pages** → **Logs**.
 
 ## Typography
 
-**[Geist Serif](https://vercel.com/font?type=serif)** for body and headings, with **[Geist Pixel](https://vercel.com/font?type=pixel)** for labels, stats, and short supporting lines. Fonts are **self-hosted** in `public/fonts/` (not loaded from the `geist` package at runtime). After `npm update geist`, run `npm run fonts:sync`, then `npm run favicon` if the pixel font changed.
+**[Geist Serif](https://vercel.com/font?type=serif)** for body and headings, with **[Geist Pixel](https://vercel.com/font?type=pixel)** for labels, stats, and short supporting lines. Fonts are **self-hosted** in `public/fonts/`. After `npm update geist`, run `npm run fonts:sync`, then `npm run favicon` if the pixel font changed.
 
-`public/favicon.svg` is the cream circle plus the **Geist Pixel “P”** as exported vector paths (`npm run favicon`, uses dev-only `fontkit`).
+`public/favicon.svg` — cream circle + Geist Pixel **P** (`npm run favicon`, dev-only `fontkit`).
 
 ## Content
 

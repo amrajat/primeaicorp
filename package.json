@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "deploy:cloudflare": "wrangler deploy -c dist/server/wrangler.json",
     "preview": "astro preview",
     "favicon": "node scripts/export-favicon-p.mjs",
     "fonts:sync": "node scripts/sync-fonts.mjs",
@@ -18,12 +19,14 @@
     "geist": "^1.9.2"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.4.6",
     "@astrojs/sitemap": "^3.7.4",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.5",
     "astro": "^7.4.7",
     "gsap": "^3.15.1",
     "simple-icons": "^16.37.0",
-    "tailwindcss": "^4.3.5"
+    "tailwindcss": "^4.3.5",
+    "wrangler": "^4.159.0"
   }
 }
