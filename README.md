@@ -32,7 +32,9 @@ npm run preview
 
 ## Typography
 
-**[Geist Serif](https://vercel.com/font?type=serif)** for body and headings, with **[Geist Pixel](https://vercel.com/font?type=pixel)** for labels, stats, and short supporting lines. Both are self-hosted from the `geist` npm package (`public/fonts/GeistSerifVF.woff2`, `public/fonts/GeistPixelVF.woff2`). Re-copy after `npm update geist` if needed.
+**[Geist Serif](https://vercel.com/font?type=serif)** for body and headings, with **[Geist Pixel](https://vercel.com/font?type=pixel)** for labels, stats, and short supporting lines. Fonts are **self-hosted** in `public/fonts/` (not loaded from the `geist` package at runtime). After `npm update geist`, run `npm run fonts:sync`, then `npm run favicon` if the pixel font changed.
+
+`public/favicon.svg` is the cream circle plus the **Geist Pixel “P”** as exported vector paths (`npm run favicon`, uses dev-only `fontkit`).
 
 ## Content
 
