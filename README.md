@@ -22,6 +22,9 @@ npm run preview
    - **Node.js version:** 22 (matches `package.json` engines)
 4. Add custom domain `primeaicorp.com` (and optional `www` redirect via `public/_redirects`).
 5. **Project intake form (Pages Functions):** Cloudflare Pages does **not** have a Netlify-style **Forms** toggle in project settings. Submissions are handled by a [Pages Function](https://developers.cloudflare.com/pages/functions/) at `functions/api/project-intake.js` (see the [HTML forms tutorial](https://developers.cloudflare.com/pages/tutorials/forms/)). The form on `/get-started` POSTs to `/api/project-intake`; the UI shows success on the same page (`?submitted=true`).
+   - Keep the repo **`/functions`** folder at the project root (same level as `package.json`), not inside `dist/`. `wrangler.toml` sets `pages_build_output_dir` so Pages pairs `dist/` with Functions on deploy.
+   - `public/_routes.json` limits Function invocations to `/api/*` (static pages stay free-tier static).
+   - **Smoke test after deploy:** `curl -I https://primeaicorp.com/api/project-intake` should return **`405 Method Not Allowed`** (not `404`). `404` means the Function did not deploy—check **Deployments** → latest build log for Functions compile errors and that **Root directory** is `/`.
    - In the Pages project → **Settings** → **Environment variables**, set:
      - `RESEND_API_KEY` — from [Resend](https://resend.com) (or another provider you wire in the Function)
      - `FORM_NOTIFY_EMAIL` — optional, defaults to `ai@primeaicorp.com`

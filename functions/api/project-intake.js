@@ -5,7 +5,7 @@
  * @see https://developers.cloudflare.com/pages/tutorials/forms/
  */
 
-import { handleProjectIntake } from "../../lib/project-intake-handler.js";
+import { handleProjectIntake } from "../lib/project-intake-handler.js";
 
 export async function onRequestPost(context) {
   const input = await context.request.formData();

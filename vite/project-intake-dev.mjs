@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { handleProjectIntake } from "../lib/project-intake-handler.js";
+import { handleProjectIntake } from "../functions/lib/project-intake-handler.js";
 
 function loadDevVars(root) {
   const path = resolve(root, ".dev.vars");
