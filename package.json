@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "deploy:cloudflare": "wrangler deploy -c dist/server/wrangler.json",
+    "deploy:cloudflare": "node scripts/deploy-cloudflare.mjs",
     "preview": "astro preview",
     "favicon": "node scripts/export-favicon-p.mjs",
     "fonts:sync": "node scripts/sync-fonts.mjs",

@@ -23,12 +23,15 @@ The intake API is an **Astro server route** (`src/pages/api/project-intake.ts`, 
    - **Deploy command:** `npm run deploy:cloudflare`
    - **Build output directory:** leave **empty** (do not use `dist` only—that skips the Worker)
    - **Node.js version:** `22` (or match `package.json` engines)
-3. **Worker variables and secrets** (same app you deploy—not a separate static “Pages” artifact):
-   - Open the **Worker** → **Settings** → **Variables and secrets** → **Production** (and Preview if you use it).
-   - Add **`RESEND_API_KEY`** as an **encrypted secret** (Resend → API Keys).
-   - Add **`FORM_NOTIFY_EMAIL`** = `ai@primeaicorp.com` (plain text).
-   - Add **`RESEND_FROM`** = a sender Resend accepts, e.g. `Prime AI Company <notify@primeaicorp.com>` after you [verify the domain](https://resend.com/docs/dashboard/domains/introduction) in Resend—not only `onboarding@resend.dev` for real inboxes.
-   - Redeploy after adding secrets. If the key is missing, the form shows an error instead of “Thank you” with no email.
+3. **Resend env (use Builds → Variables, not greyed-out Runtime):**  
+   On **Settings → Builds → Variables and secrets**, set (you already have these):
+   - **`RESEND_API_KEY`** — prefer **Encrypt**; from [Resend API Keys](https://resend.com/api-keys).
+   - **`FORM_NOTIFY_EMAIL`** = `ai@primeaicorp.com`
+   - **`RESEND_FROM`** = sender Resend allows (domain [verified](https://resend.com/docs/dashboard/domains/introduction) for `ai@primeaicorp.com`).
+
+   Cloudflare only lets you edit **runtime** Variables and secrets when the Worker has a **script**. This project deploys that script via **`npm run deploy:cloudflare`**, which copies the Builds variables into the Worker config at deploy time—so you keep using **Builds → Variables** even when Runtime is disabled.
+
+   **Required:** **Deploy command** = `npm run deploy:cloudflare` (not empty). **Build output directory** = empty. If you only upload static files, you get “static assets only” and the API/env won’t work.
 4. **Local dev:** copy `.dev.vars.example` → `.dev.vars` (gitignored); `platformProxy` loads it for `npm run dev` / `npm run preview`.
 5. **Custom domain:** attach `primeaicorp.com` to this **Worker** (same place you had Pages). Optional `www` redirect in `public/_redirects`.
 6. **Smoke test:** `curl -I https://primeaicorp.com/api/project-intake` → **405** (not 404). Then submit on `/get-started/`.
