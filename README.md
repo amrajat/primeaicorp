@@ -27,7 +27,8 @@ npm run preview
      - `FORM_NOTIFY_EMAIL` — optional, defaults to `ai@primeaicorp.com`
      - `RESEND_FROM` — verified sender (e.g. `Prime AI Company <hello@primeaicorp.com>`)
    - Without `RESEND_API_KEY`, submissions still return success but only appear in **Workers & Pages** → your project → **Logs** (Real-time logs).
-   - Local `npm run dev` does not run Pages Functions; test the form on a deployed preview or `*.pages.dev` URL.
+   - **Local testing:** put secrets in **`.dev.vars`** (repo root; gitignored), then `npm run dev` and submit on **Get started**. Astro dev serves `POST /api/project-intake` via the same handler as production (reads `.dev.vars`).
+   - Optional production-like check: `npm run build` && `npx wrangler pages dev dist --compatibility-date=2024-11-01`.
 
 ## Typography
 

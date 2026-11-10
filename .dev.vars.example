@@ -1,0 +1,9 @@
+# Copy to `.dev.vars` in the project root (same folder as package.json).
+# Wrangler loads this for local Pages Functions — never commit `.dev.vars`.
+#
+#   cp .dev.vars.example .dev.vars
+#   # then paste your real Resend key into .dev.vars
+
+RESEND_API_KEY=re_xxxxxxxx
+FORM_NOTIFY_EMAIL=ai@primeaicorp.com
+RESEND_FROM=Prime AI Company <onboarding@resend.dev>
