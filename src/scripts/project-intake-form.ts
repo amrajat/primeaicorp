@@ -84,7 +84,10 @@ export function initProjectIntakeForm() {
         body: formBodyToUrlEncoded(form).toString(),
       });
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const body = (await res.json().catch(() => null)) as
+        | { ok?: boolean }
+        | null;
+      if (!res.ok || body?.ok === false) throw new Error(`HTTP ${res.status}`);
 
       setStatus("success");
       form.reset();

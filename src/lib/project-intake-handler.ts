@@ -35,43 +35,51 @@ export async function handleProjectIntake(
     const payload = formDataToObject(formData);
 
     const notifyEmail = env.FORM_NOTIFY_EMAIL ?? "ai@primeaicorp.com";
-    const resendKey = env.RESEND_API_KEY;
+    const resendKey = env.RESEND_API_KEY?.trim();
     const from = env.RESEND_FROM ?? "Prime AI Company <onboarding@resend.dev>";
 
-    if (resendKey) {
-      const company =
-        typeof payload.company === "string" ? payload.company : "New submission";
-      const replyTo =
-        typeof payload.email === "string" ? payload.email : undefined;
-
-      const emailRes = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendKey}`,
-          "Content-Type": "application/json",
+    if (!resendKey) {
+      console.error("project-intake: RESEND_API_KEY is not set on the Worker");
+      return new Response(
+        JSON.stringify({ ok: false, error: "email_not_configured" }),
+        {
+          status: 503,
+          headers: { "Content-Type": "application/json" },
         },
-        body: JSON.stringify({
-          from,
-          to: [notifyEmail],
-          subject: `Project intake: ${company}`,
-          text: formatEmailBody(payload),
-          ...(replyTo ? { reply_to: replyTo } : {}),
-        }),
-      });
-
-      if (!emailRes.ok) {
-        console.error("Resend API error:", await emailRes.text());
-        return new Response(
-          JSON.stringify({ ok: false, error: "email_delivery_failed" }),
-          { status: 502, headers: { "Content-Type": "application/json" } },
-        );
-      }
-    } else {
-      console.log(
-        "project-intake (no RESEND_API_KEY):",
-        JSON.stringify(payload),
       );
     }
+
+    const company =
+      typeof payload.company === "string" ? payload.company : "New submission";
+    const replyTo =
+      typeof payload.email === "string" ? payload.email : undefined;
+
+    const emailRes = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from,
+        to: [notifyEmail],
+        subject: `Project intake: ${company}`,
+        text: formatEmailBody(payload),
+        ...(replyTo ? { reply_to: replyTo } : {}),
+      }),
+    });
+
+    const resendBody = await emailRes.text();
+
+    if (!emailRes.ok) {
+      console.error("Resend API error:", resendBody);
+      return new Response(
+        JSON.stringify({ ok: false, error: "email_delivery_failed" }),
+        { status: 502, headers: { "Content-Type": "application/json" } },
+      );
+    }
+
+    console.log("project-intake: Resend accepted submission", resendBody);
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,

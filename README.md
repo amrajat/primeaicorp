@@ -23,8 +23,13 @@ The intake API is an **Astro server route** (`src/pages/api/project-intake.ts`, 
    - **Deploy command:** `npm run deploy:cloudflare`
    - **Build output directory:** leave **empty** (do not use `dist` only—that skips the Worker)
    - **Node.js version:** `22` (or match `package.json` engines)
-3. **Environment variables** (Production + Preview): `RESEND_API_KEY`, optional `FORM_NOTIFY_EMAIL`, `RESEND_FROM`.
-4. **Secrets for local dev:** copy `.dev.vars.example` → `.dev.vars` (gitignored).
+3. **Worker variables and secrets** (same app you deploy—not a separate static “Pages” artifact):
+   - Open the **Worker** → **Settings** → **Variables and secrets** → **Production** (and Preview if you use it).
+   - Add **`RESEND_API_KEY`** as an **encrypted secret** (Resend → API Keys).
+   - Add **`FORM_NOTIFY_EMAIL`** = `ai@primeaicorp.com` (plain text).
+   - Add **`RESEND_FROM`** = a sender Resend accepts, e.g. `Prime AI Company <notify@primeaicorp.com>` after you [verify the domain](https://resend.com/docs/dashboard/domains/introduction) in Resend—not only `onboarding@resend.dev` for real inboxes.
+   - Redeploy after adding secrets. If the key is missing, the form shows an error instead of “Thank you” with no email.
+4. **Local dev:** copy `.dev.vars.example` → `.dev.vars` (gitignored); `platformProxy` loads it for `npm run dev` / `npm run preview`.
 5. **Custom domain:** attach `primeaicorp.com` to this **Worker** (same place you had Pages). Optional `www` redirect in `public/_redirects`.
 6. **Smoke test:** `curl -I https://primeaicorp.com/api/project-intake` → **405** (not 404). Then submit on `/get-started/`.
 
@@ -33,8 +38,8 @@ If you previously set **Deploy command** to bare `npx wrangler deploy`, replace 
 ## Project intake form
 
 - Form POSTs to `/api/project-intake`; success UI on `/get-started?submitted=true`.
-- Handler: `src/lib/project-intake-handler.ts` (Resend optional).
-- Without `RESEND_API_KEY`, submissions return success and log in **Workers & Pages** → **Logs**.
+- Handler: `src/lib/project-intake-handler.ts` (Resend required in production).
+- Check delivery in [Resend → Emails](https://resend.com/emails) and **Workers & Pages** → **Logs** (`project-intake: Resend accepted submission`).
 
 ## Typography
 
